@@ -338,8 +338,11 @@ export default function Footer() {
                 </button>
               </form>
               {subscribed && (
-                <p className="text-[#00e5bf] text-[11px] mt-2 animate-fade-in">
-                  ✓ Terima kasih! Anda telah terdaftar.
+                <p className="text-[#00e5bf] text-[11px] mt-2 animate-fade-in flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5 text-[#00e5bf] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  Terima kasih! Anda telah terdaftar.
                 </p>
               )}
             </div>
@@ -364,8 +367,8 @@ export default function Footer() {
               Sitemap
             </Link>
             <span className="text-white/20">•</span>
-            <span className="text-[#94a3b8] flex items-center gap-1.5">
-              <span>🇮🇩</span> Made in Indonesia
+            <span className="text-[#94a3b8]">
+              Made in Indonesia
             </span>
           </div>
         </div>

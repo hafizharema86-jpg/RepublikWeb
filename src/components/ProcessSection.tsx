@@ -1,33 +1,7 @@
-interface ProcessStep {
-  number: string;
-  title: string;
-  description: string;
-}
-
-const steps: ProcessStep[] = [
-  {
-    number: "01",
-    title: "Konsultasi",
-    description: "Ceritakan kebutuhan, tujuan, dan target bisnis Anda.",
-  },
-  {
-    number: "02",
-    title: "Pilih Solusi",
-    description: "Tentukan template, custom website, atau social media.",
-  },
-  {
-    number: "03",
-    title: "Proses Pengerjaan",
-    description: "Tim kami mengerjakan dengan progres yang transparan.",
-  },
-  {
-    number: "04",
-    title: "Project Selesai",
-    description: "Website live, konten berjalan, dan support tetap tersedia.",
-  },
-];
+import { useData } from "@/context/DataContext";
 
 export default function ProcessSection() {
+  const { siteContent, processSteps } = useData();
   return (
     <section id="cara-kerja" className="w-full bg-white py-16 md:py-24 border-t border-gray-100">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20">
@@ -35,11 +9,14 @@ export default function ProcessSection() {
         {/* Section Header */}
         <div className="mb-14 md:mb-16">
           <span className="text-[#00a68a] text-xs md:text-sm font-bold tracking-[0.2em] uppercase block mb-3">
-            CARA KERJA
+            {siteContent.processSubtitle || "CARA KERJA"}
           </span>
-          <h2 className="text-3xl md:text-[36px] lg:text-[38px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight">
-            Empat Langkah Sederhana.
+          <h2 className="text-3xl md:text-[36px] lg:text-[38px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight whitespace-pre-line">
+            {siteContent.processTitle}
           </h2>
+          <p className="text-[#64748b] text-xs md:text-sm mt-2 max-w-xl whitespace-pre-line">
+            {siteContent.processDescription}
+          </p>
         </div>
 
         {/* Steps Grid with Connecting Line */}
@@ -57,9 +34,9 @@ export default function ProcessSection() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 relative z-10">
-            {steps.map((step) => (
+            {processSteps.map((step) => (
               <div 
-                key={step.number} 
+                key={step.id} 
                 className="flex flex-col items-start group"
               >
                 {/* Circle Number */}

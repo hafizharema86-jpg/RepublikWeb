@@ -36,10 +36,10 @@ export default function CustomWebsiteSection() {
             CUSTOM WEBSITE
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight mb-4">
-            Butuh Sesuatu yang Lebih Spesifik?
+            Butuh Website Custom dari Nol dengan Konsep Spesifik?
           </h2>
           <p className="text-[#64748b] text-sm md:text-base leading-relaxed mb-8 font-normal">
-            Bangun website yang benar-benar sesuai dengan kebutuhan bisnis, workflow, dan tujuan Anda.
+            Bangun website yang benar-benar sesuai dengan kebutuhan bisnis, alur kerja (workflow), dan identitas brand unik Anda.
           </p>
 
           {/* 2-Column Pill List */}

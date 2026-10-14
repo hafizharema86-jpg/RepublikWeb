@@ -8,38 +8,10 @@ interface TestimonialItem {
   glow?: boolean;
 }
 
-const testimonials: TestimonialItem[] = [
-  {
-    id: "1",
-    rating: 5,
-    quote:
-      '"Website dan konten Instagram kami akhirnya terlihat satu identitas. Pesanan naik dan brand terasa jauh lebih profesional."',
-    name: "Rani Puspita",
-    role: "Owner, Kopi Hollow",
-    initials: "RP",
-    glow: true,
-  },
-  {
-    id: "2",
-    rating: 5,
-    quote:
-      '"Prosesnya jelas dari awal. Timeline ditepati, revisi ditangani cepat, dan hasil akhirnya melebihi ekspektasi kami."',
-    name: "Andi Nugroho",
-    role: "Founder, Nexora Studio",
-    initials: "AN",
-  },
-  {
-    id: "3",
-    rating: 5,
-    quote:
-      '"Kami mulai dari template lalu custom beberapa fitur. Sangat efisien untuk tim kecil seperti kami."',
-    name: "Siti Maharani",
-    role: "Marketing Lead, StyleNest",
-    initials: "SM",
-  },
-];
+import { useData } from "@/context/DataContext";
 
 export default function TestimonialSection() {
+  const { siteContent, testimonials } = useData();
   return (
     <section id="testimonial" className="w-full bg-white py-16 md:py-24 border-t border-gray-100">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20">
@@ -47,10 +19,10 @@ export default function TestimonialSection() {
         {/* Section Header */}
         <div className="mb-10">
           <span className="text-[#00a68a] text-xs font-bold tracking-[0.2em] uppercase block mb-3">
-            TESTIMONIAL
+            {siteContent.testimonialSubtitle}
           </span>
-          <h2 className="text-3xl md:text-[38px] lg:text-[42px] font-bold text-[#111827] leading-[1.2] tracking-tight">
-            Apa Kata Klien Kami?
+          <h2 className="text-3xl md:text-[38px] lg:text-[42px] font-bold text-[#111827] leading-[1.2] tracking-tight whitespace-pre-line">
+            {siteContent.testimonialTitle}
           </h2>
         </div>
 

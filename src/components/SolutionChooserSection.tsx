@@ -41,7 +41,10 @@ const solutions: SolutionItem[] = [
   },
 ];
 
+import { useData } from "@/context/DataContext";
+
 export default function SolutionChooserSection() {
+  const { siteContent } = useData();
   return (
     <section id="pilih-solusi" className="w-full bg-white py-16 md:py-24 border-t border-gray-100">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20">
@@ -49,10 +52,10 @@ export default function SolutionChooserSection() {
         {/* Section Header */}
         <div className="mb-12">
           <span className="text-[#00a68a] text-xs md:text-sm font-bold tracking-[0.2em] uppercase block mb-3">
-            PILIH SOLUSI
+            {siteContent.solutionSubtitle}
           </span>
-          <h2 className="text-3xl md:text-[36px] lg:text-[38px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight">
-            Mana yang Paling Sesuai untuk Anda?
+          <h2 className="text-3xl md:text-[36px] lg:text-[38px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight whitespace-pre-line">
+            {siteContent.solutionTitle}
           </h2>
         </div>
 

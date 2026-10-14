@@ -1,51 +1,9 @@
-interface ReasonCard {
-  id: string;
-  title: string;
-  description: string;
-  icon: "layers" | "flash" | "sliders" | "sparkles" | "eye" | "support";
-}
-
-const reasons: ReasonCard[] = [
-  {
-    id: "1",
-    title: "One Stop Digital Solution",
-    description: "Website, template, dan social media dikerjakan dalam satu platform.",
-    icon: "layers",
-  },
-  {
-    id: "2",
-    title: "Template Siap Pakai",
-    description: "Mulai project lebih cepat dengan template yang sudah teruji.",
-    icon: "flash",
-  },
-  {
-    id: "3",
-    title: "Custom Sesuai Kebutuhan",
-    description: "Fitur dan sistem dirancang mengikuti alur kerja bisnis Anda.",
-    icon: "sliders",
-  },
-  {
-    id: "4",
-    title: "Desain Profesional",
-    description: "Tampilan bersih, modern, dan kredibel di semua perangkat.",
-    icon: "sparkles",
-  },
-  {
-    id: "5",
-    title: "Proses Transparan",
-    description: "Progres, timeline, dan kebutuhan project jelas sejak awal.",
-    icon: "eye",
-  },
-  {
-    id: "6",
-    title: "Support",
-    description: "Pendampingan setelah project berjalan, bukan sekadar serah terima.",
-    icon: "support",
-  },
-];
+import { useData, AboutFeatureItem } from "@/context/DataContext";
 
 export default function AboutSection() {
-  const renderIcon = (type: ReasonCard["icon"]) => {
+  const { siteContent, aboutFeatures } = useData();
+
+  const renderIcon = (type: AboutFeatureItem["icon"]) => {
     switch (type) {
       case "layers":
         return (
@@ -89,32 +47,41 @@ export default function AboutSection() {
             <line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
           </svg>
         );
+      default:
+        return (
+          <svg className="w-5 h-5 text-[#00a68a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        );
     }
   };
 
   return (
-    <section id="tentang-kami" className="w-full bg-white py-16 md:py-24 border-t border-gray-100">
+    <section id="tentang-kami" className="w-full bg-gradient-to-b from-[#fbf8f2] via-[#f7f3ea] to-[#f4eee4] py-20 md:py-28 border-t border-amber-200/70 relative">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20">
         
         {/* Section Header */}
         <div className="mb-12">
           <span className="text-[#00a68a] text-xs md:text-sm font-bold tracking-[0.2em] uppercase block mb-3">
-            TENTANG KAMI
+            {siteContent.aboutSubtitle || "TENTANG KAMI"}
           </span>
-          <h2 className="text-3xl md:text-[36px] lg:text-[38px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight">
-            Kenapa RepublikWeb.net?
+          <h2 className="text-3xl md:text-[36px] lg:text-[40px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight whitespace-pre-line">
+            {siteContent.aboutTitle}
           </h2>
+          <p className="text-[#78716c] text-xs md:text-sm mt-2 max-w-xl whitespace-pre-line">
+            {siteContent.aboutDescription}
+          </p>
         </div>
 
-        {/* 6 Cards Grid (3 columns on lg, 2 on md, 1 on mobile) */}
+        {/* Dynamic Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reasons.map((item) => (
+          {aboutFeatures.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl md:rounded-[1.75rem] border border-gray-200/80 p-7 md:p-8 transition-all duration-200 hover:shadow-lg hover:border-[#00a68a]/30 group flex flex-col justify-start"
+              className="bg-white/95 rounded-2xl md:rounded-[1.75rem] border border-amber-100/90 p-7 md:p-8 transition-all duration-300 hover:shadow-xl hover:border-[#00a68a]/50 hover:-translate-y-1 group flex flex-col justify-start shadow-xs"
             >
               {/* Icon Circle */}
-              <div className="w-11 h-11 rounded-full bg-[#eaf7f4] flex items-center justify-center shrink-0 mb-6 group-hover:scale-105 transition-transform duration-200">
+              <div className="w-12 h-12 rounded-2xl bg-[#eaf7f4] flex items-center justify-center shrink-0 mb-6 group-hover:bg-[#00a68a] group-hover:text-white group-hover:scale-105 transition-all duration-300">
                 {renderIcon(item.icon)}
               </div>
 
@@ -124,7 +91,7 @@ export default function AboutSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-[#64748b] text-sm leading-relaxed font-normal">
+              <p className="text-[#78716c] text-sm leading-relaxed font-normal">
                 {item.description}
               </p>
             </div>

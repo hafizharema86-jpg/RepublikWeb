@@ -2,54 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useData, PortfolioItem } from "@/context/DataContext";
 
 type PortfolioCategory = "Semua" | "Landing Page" | "Website" | "E-Commerce" | "Social Media";
-
-interface PortfolioItem {
-  id: string;
-  title: string;
-  category: "Landing Page" | "Website" | "E-Commerce" | "Social Media";
-  image: string;
-}
-
-const portfolioItems: PortfolioItem[] = [
-  {
-    id: "evergreen",
-    title: "Evergreen App",
-    category: "Landing Page",
-    image: "/portfolio-evergreen.jpg",
-  },
-  {
-    id: "nexora",
-    title: "Nexora Agency",
-    category: "Website",
-    image: "/portfolio-nexora.jpg",
-  },
-  {
-    id: "stylenest",
-    title: "StyleNest",
-    category: "E-Commerce",
-    image: "/portfolio-stylenest.jpg",
-  },
-  {
-    id: "hollow-bean",
-    title: "Hollow Bean",
-    category: "Social Media",
-    image: "/portfolio-coffee.jpg",
-  },
-  {
-    id: "oak-ember",
-    title: "Oak & Ember",
-    category: "Website",
-    image: "/portfolio-bistro.jpg",
-  },
-  {
-    id: "thoughtful-studio",
-    title: "Thoughtful Studio",
-    category: "Landing Page",
-    image: "/portfolio-designer.jpg",
-  },
-];
 
 const categories: PortfolioCategory[] = [
   "Semua",
@@ -60,24 +15,38 @@ const categories: PortfolioCategory[] = [
 ];
 
 export default function PortfolioSection() {
+  const { portfolios } = useData();
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory>("Semua");
+  const [previewPortfolio, setPreviewPortfolio] = useState<PortfolioItem | null>(null);
 
   const filteredItems = activeCategory === "Semua"
-    ? portfolioItems
-    : portfolioItems.filter((item) => item.category === activeCategory);
+    ? portfolios
+    : portfolios.filter((item) => item.category === activeCategory);
+
+  const handleInquiry = (item: PortfolioItem) => {
+    const msg = `Halo RepublikWeb, saya melihat portofolio *${item.title}* (${item.category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?`;
+    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`, "_blank");
+  };
 
   return (
-    <section id="portofolio" className="w-full bg-white py-16 md:py-24 border-t border-gray-100">
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20">
+    <section id="portofolio" className="w-full bg-gradient-to-b from-[#090e1a] via-[#0f172a] to-[#080d18] text-white py-20 md:py-28 border-t border-slate-800/80 relative overflow-hidden">
+      {/* Ambient Radial Lights */}
+      <div className="absolute top-0 right-10 w-[500px] h-[500px] bg-[#00a68a]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-[400px] h-[400px] bg-sky-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20 relative z-10">
         
         {/* Section Header */}
         <div className="mb-10">
-          <span className="text-[#00a68a] text-xs md:text-sm font-bold tracking-[0.2em] uppercase block mb-3">
-            PORTOFOLIO
+          <span className="text-[#2dd4bf] text-xs md:text-sm font-bold tracking-[0.2em] uppercase block mb-3">
+            PORTOFOLIO KARYA
           </span>
-          <h2 className="text-3xl md:text-[36px] lg:text-[38px] font-bold text-[#1a1a1a] leading-[1.2] tracking-tight">
-            Project yang Telah Kami Kerjakan.
+          <h2 className="text-3xl md:text-[36px] lg:text-[40px] font-bold text-white leading-[1.2] tracking-tight">
+            Project Unggulan yang Telah Kami Kerjakan.
           </h2>
+          <p className="text-slate-400 text-xs md:text-sm mt-2 max-w-xl">
+            Hasil karya nyata pembuatan website, landing page, dan digital branding dengan performa dan konversi maksimal.
+          </p>
         </div>
 
         {/* Filter Pills */}
@@ -88,10 +57,10 @@ export default function PortfolioSection() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
+                className={`px-5 py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20 font-semibold"
-                    : "bg-white text-[#64748b] border border-gray-200/90 hover:border-gray-300 hover:text-[#1a1a1a] hover:bg-gray-50/60"
+                    ? "bg-[#00a68a] text-white shadow-lg shadow-[#00a68a]/30 font-bold scale-102"
+                    : "bg-slate-800/80 text-slate-300 border border-slate-700/80 hover:border-slate-500 hover:text-white hover:bg-slate-800"
                 }`}
               >
                 {category}
@@ -105,10 +74,11 @@ export default function PortfolioSection() {
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className="group bg-white rounded-[2rem] border border-gray-200/80 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-transparent hover:-translate-y-1 flex flex-col cursor-pointer"
+              onClick={() => setPreviewPortfolio(item)}
+              className="group bg-slate-900/90 rounded-[2rem] border border-slate-800/90 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-[#00a68a]/10 hover:border-[#00a68a]/60 hover:-translate-y-1.5 flex flex-col cursor-pointer"
             >
               {/* Mockup Image Container */}
-              <div className="relative w-full aspect-[4/3] bg-[#f8fafc] overflow-hidden">
+              <div className="relative w-full aspect-[4/3] bg-slate-950 overflow-hidden">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -121,29 +91,29 @@ export default function PortfolioSection() {
 
                 {/* Floating Category Badge appearing on the bottom of the image on hover */}
                 <div className="absolute bottom-3.5 left-6 md:left-7 z-10 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
-                  <span className="text-xs font-bold tracking-[0.16em] uppercase text-white/90 drop-shadow-xs">
+                  <span className="text-xs font-bold tracking-[0.16em] uppercase text-[#2dd4bf] drop-shadow-xs">
                     {item.category}
                   </span>
                 </div>
               </div>
 
               {/* Bottom Card Area */}
-              <div className="relative px-6 py-5 md:px-7 md:py-6 transition-colors duration-300 bg-white group-hover:bg-[#495159]">
-                {/* Title (turns white on hover) */}
-                <h3 className="text-xl font-bold text-[#1a1a1a] group-hover:text-white transition-colors duration-300 tracking-tight">
+              <div className="relative px-6 py-5 md:px-7 md:py-6 transition-colors duration-300 bg-slate-900 group-hover:bg-slate-850">
+                {/* Title */}
+                <h3 className="text-xl font-bold text-white group-hover:text-[#2dd4bf] transition-colors duration-300 tracking-tight">
                   {item.title}
                 </h3>
 
                 {/* Subtitle / CTA Swap on Hover */}
                 <div className="relative mt-1.5 h-6">
                   {/* Default Category Text (visible when unhovered) */}
-                  <p className="text-[#64748b] text-sm font-normal transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1 pointer-events-none">
+                  <p className="text-slate-400 text-sm font-normal transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1 pointer-events-none">
                     {item.category}
                   </p>
 
-                  {/* Hover 'Lihat Project ->' (slides up into view when hovered) */}
-                  <div className="absolute inset-0 flex items-center gap-1.5 text-sm font-medium text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <span>Lihat Project</span>
+                  {/* Hover 'Lihat Preview Project ->' (slides up into view when hovered) */}
+                  <div className="absolute inset-0 flex items-center gap-1.5 text-sm font-bold text-[#2dd4bf] opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                    <span>Lihat Preview Project</span>
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
                       width="15" 
@@ -168,6 +138,70 @@ export default function PortfolioSection() {
         </div>
 
       </div>
+
+      {/* ===================== MODAL PREVIEW PORTFOLIO ===================== */}
+      {previewPortfolio && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden z-10 animate-scaleUp">
+            {/* Header Toolbar */}
+            <div className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xs font-bold bg-[#00a68a] text-white px-2.5 py-0.5 rounded-full">
+                  {previewPortfolio.category}
+                </span>
+                <span className="font-bold text-sm truncate">{previewPortfolio.title}</span>
+              </div>
+              <button
+                onClick={() => setPreviewPortfolio(null)}
+                className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Main Preview Image */}
+            <div className="relative aspect-[16/10] w-full bg-slate-100">
+              <Image
+                src={previewPortfolio.image}
+                alt={previewPortfolio.title}
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+
+            {/* Information & Action Footer */}
+            <div className="p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border-t border-slate-100">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">{previewPortfolio.title}</h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Kategori: <strong>{previewPortfolio.category}</strong> • Dikerjakan oleh tim RepublikWeb
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setPreviewPortfolio(null)}
+                  className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition-all cursor-pointer"
+                >
+                  Tutup
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleInquiry(previewPortfolio);
+                    setPreviewPortfolio(null);
+                  }}
+                  className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-[#00a68a] hover:bg-[#008f76] text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+                >
+                  Buat Website Serupa →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
+

@@ -175,7 +175,8 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="layanan" className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20 py-10 md:py-14">
+    <section id="layanan" className="w-full bg-[#f8fafc] py-16 md:py-24 border-t border-slate-200/80">
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20">
       {/* Section Header */}
       <div className="mb-7 md:mb-9">
         <span className="text-[#00a68a] text-[11px] md:text-xs font-bold tracking-[0.2em] uppercase block mb-2.5">
@@ -275,6 +276,7 @@ export default function ServicesSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }
