@@ -66,6 +66,11 @@ export interface SiteContent {
   testimonialSubtitle: string;
   solutionTitle: string;
   solutionSubtitle: string;
+  // Info Kontak & Hubungi Kami
+  contactEmail: string;
+  contactWhatsapp: string;
+  contactHours: string;
+  contactLocation: string;
 }
 
 interface DataContextType {
@@ -357,6 +362,10 @@ const defaultSiteContent: SiteContent = {
   testimonialSubtitle: "TESTIMONIAL",
   solutionTitle: "Siap Memulai Project Digital Anda?",
   solutionSubtitle: "Pilih jalur yang paling sesuai dengan kebutuhan dan timeline bisnis Anda.",
+  contactEmail: "halo@republikweb.net",
+  contactWhatsapp: "+62 812-3456-7890",
+  contactHours: "Senin – Sabtu, 09.00 – 18.00 WIB",
+  contactLocation: "Jakarta & Yogyakarta, Indonesia",
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -403,7 +412,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       if (savedProcessSteps) setProcessSteps(JSON.parse(savedProcessSteps));
 
       const savedSiteContent = localStorage.getItem("rw_site_content");
-      if (savedSiteContent) setSiteContent(JSON.parse(savedSiteContent));
+      if (savedSiteContent) {
+        setSiteContent({ ...defaultSiteContent, ...JSON.parse(savedSiteContent) });
+      }
     } catch {
       // Ignore
     }

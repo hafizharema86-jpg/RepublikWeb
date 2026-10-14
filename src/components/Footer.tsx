@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useData } from "@/context/DataContext";
 
 export default function Footer() {
+  const { siteContent } = useData();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -269,8 +271,8 @@ export default function Footer() {
                 </svg>
                 <div>
                   <span className="block text-xs text-[#64748b]">Email Resmi</span>
-                  <a href="mailto:halo@republikweb.net" className="text-white hover:text-[#00e5bf] transition-colors font-medium">
-                    halo@republikweb.net
+                  <a href={`mailto:${siteContent.contactEmail || "halo@republikweb.net"}`} className="text-white hover:text-[#00e5bf] transition-colors font-medium">
+                    {siteContent.contactEmail || "halo@republikweb.net"}
                   </a>
                 </div>
               </li>
@@ -281,8 +283,13 @@ export default function Footer() {
                 </svg>
                 <div>
                   <span className="block text-xs text-[#64748b]">WhatsApp / Telp</span>
-                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#00e5bf] transition-colors font-medium">
-                    +62 812-3456-7890
+                  <a
+                    href={`https://wa.me/${(siteContent.contactWhatsapp || "081234567890").replace(/[^0-9]/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-[#00e5bf] transition-colors font-medium"
+                  >
+                    {siteContent.contactWhatsapp || "+62 812-3456-7890"}
                   </a>
                 </div>
               </li>
@@ -294,7 +301,7 @@ export default function Footer() {
                 <div>
                   <span className="block text-xs text-[#64748b]">Jam Layanan</span>
                   <span className="text-white font-medium">
-                    Senin – Sabtu, 09.00 – 18.00 WIB
+                    {siteContent.contactHours || "Senin – Sabtu, 09.00 – 18.00 WIB"}
                   </span>
                 </div>
               </li>
@@ -307,7 +314,7 @@ export default function Footer() {
                 <div>
                   <span className="block text-xs text-[#64748b]">Lokasi Kantor</span>
                   <span className="text-white font-medium">
-                    Jakarta &amp; Yogyakarta, Indonesia
+                    {siteContent.contactLocation || "Jakarta & Yogyakarta, Indonesia"}
                   </span>
                 </div>
               </li>

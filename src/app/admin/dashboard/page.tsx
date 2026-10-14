@@ -414,12 +414,13 @@ export default function AdminDashboardPage() {
 
           {/* Navigation Menus */}
           <div className="p-4 space-y-6">
-            {/* Group 1: UTAMA */}
+            {/* Group: MENU UTAMA */}
             <div>
               <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold px-3 block mb-2">
-                UTAMA
+                NAVIGASI ADMIN
               </span>
               <div className="space-y-1">
+                {/* 1. Beranda */}
                 <button
                   onClick={() => setActiveMenu("overview")}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
@@ -429,65 +430,12 @@ export default function AdminDashboardPage() {
                   }`}
                 >
                   <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
-                  <span>Dashboard Ringkasan</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Group 2: MANAJEMEN KONTEN WEB */}
-            <div>
-              <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold px-3 block mb-2">
-                KONTEN & WEBSITE
-              </span>
-              <div className="space-y-1">
-                {/* Portofolio CRUD */}
-                <button
-                  onClick={() => setActiveMenu("portfolios")}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                    activeMenu === "portfolios"
-                      ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
-                  }`}
-                >
-                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>Galeri Portofolio</span>
+                  <span>Beranda</span>
                 </button>
 
-                {/* Template CRUD */}
-                <button
-                  onClick={() => setActiveMenu("templates")}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                    activeMenu === "templates"
-                      ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
-                  }`}
-                >
-                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                  </svg>
-                  <span>Katalog Template</span>
-                </button>
-
-                {/* Testimonial CRUD */}
-                <button
-                  onClick={() => setActiveMenu("testimonials")}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                    activeMenu === "testimonials"
-                      ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
-                  }`}
-                >
-                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                  </svg>
-                  <span>Testimoni Klien</span>
-                </button>
-
-                {/* Tentang Kami */}
+                {/* 2. Tentang Kami */}
                 <button
                   onClick={() => setActiveMenu("about")}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
@@ -502,7 +450,7 @@ export default function AdminDashboardPage() {
                   <span>Tentang Kami</span>
                 </button>
 
-                {/* Cara Kerja */}
+                {/* 3. Cara Kerja */}
                 <button
                   onClick={() => setActiveMenu("process")}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
@@ -517,7 +465,52 @@ export default function AdminDashboardPage() {
                   <span>Cara Kerja</span>
                 </button>
 
-                {/* Edit Beranda */}
+                {/* 4. Portofolio */}
+                <button
+                  onClick={() => setActiveMenu("portfolios")}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                    activeMenu === "portfolios"
+                      ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                  }`}
+                >
+                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>Portofolio</span>
+                </button>
+
+                {/* 5. Testimonial */}
+                <button
+                  onClick={() => setActiveMenu("testimonials")}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                    activeMenu === "testimonials"
+                      ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                  }`}
+                >
+                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                  <span>Testimonial</span>
+                </button>
+
+                {/* 6. Katalog Template */}
+                <button
+                  onClick={() => setActiveMenu("templates")}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                    activeMenu === "templates"
+                      ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                  }`}
+                >
+                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  </svg>
+                  <span>Katalog Template</span>
+                </button>
+
+                {/* 7. Edit Konten Teks Beranda */}
                 <button
                   onClick={() => setActiveMenu("content")}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
@@ -529,15 +522,15 @@ export default function AdminDashboardPage() {
                   <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
-                  <span>Edit Beranda</span>
+                  <span>Teks & Konten Web</span>
                 </button>
               </div>
             </div>
 
-            {/* Group 3: SISTEM */}
+            {/* Group 2: SISTEM & PENGATURAN */}
             <div>
               <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold px-3 block mb-2">
-                SISTEM
+                PENGATURAN & HUBUNGI KAMI
               </span>
               <button
                 onClick={() => setActiveMenu("settings")}
@@ -1944,81 +1937,194 @@ export default function AdminDashboardPage() {
 
 
           {/* ============================================================== */}
-          {/* TAB 6: SETTINGS */}
+          {/* TAB 8: PENGATURAN AGENSI & HUBUNGI KAMI */}
           {/* ============================================================== */}
           {activeMenu === "settings" && (
-            <div className="max-w-2xl bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-6 shadow-2xs">
-              <div>
-                <h3 className="text-lg font-bold text-slate-900">Konfigurasi Sistem RepublikWeb</h3>
-                <p className="text-xs text-slate-500 mt-1">
-                  Pengaturan kontak operasional dan kode promo yang tampil di website publik.
-                </p>
+            <div className="max-w-4xl space-y-8">
+              {contentSavedNotice && (
+                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2 animate-fadeIn shadow-xs">
+                  <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Pengaturan Agensi & Kontak Hubungi Kami berhasil disimpan dan langsung aktif di web publik!</span>
+                </div>
+              )}
+
+              {/* CARD 1: HUBUNGI KAMI */}
+              <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-6 shadow-2xs">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-teal-50 text-[#00a68a] flex items-center justify-center font-bold">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">Edit Kontak "HUBUNGI KAMI"</h3>
+                      <p className="text-xs text-slate-500">
+                        Informasi kontak ini langsung tampil di footer website publik.
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-[#00a68a] border border-emerald-200">
+                    Footer Web Publik
+                  </span>
+                </div>
+
+                <form onSubmit={handleSaveSiteContent} className="space-y-4 text-xs">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Email Resmi */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-[#00a68a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>Email Resmi</span>
+                      </label>
+                      <input
+                        type="email"
+                        value={tempSiteContent.contactEmail || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactEmail: e.target.value })}
+                        placeholder="Contoh: halo@republikweb.net"
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada link email resmi footer.</span>
+                    </div>
+
+                    {/* WhatsApp / Telp */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-[#00a68a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>WhatsApp / Telp</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={tempSiteContent.contactWhatsapp || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactWhatsapp: e.target.value })}
+                        placeholder="Contoh: +62 812-3456-7890"
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Otomatis menjadi link klik chat WhatsApp.</span>
+                    </div>
+
+                    {/* Jam Layanan */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-[#00a68a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Jam Layanan</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={tempSiteContent.contactHours || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactHours: e.target.value })}
+                        placeholder="Contoh: Senin – Sabtu, 09.00 – 18.00 WIB"
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                    </div>
+
+                    {/* Lokasi Kantor */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-[#00a68a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>Lokasi Kantor</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={tempSiteContent.contactLocation || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactLocation: e.target.value })}
+                        placeholder="Contoh: Jakarta & Yogyakarta, Indonesia"
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex items-center gap-3">
+                    <button
+                      type="submit"
+                      className="px-6 py-2.5 bg-[#00a68a] hover:bg-[#008f76] text-white font-bold rounded-xl transition-all shadow-sm shadow-[#00a68a]/20 cursor-pointer flex items-center gap-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Simpan Kontak Hubungi Kami</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTempSiteContent(siteContent)}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl cursor-pointer"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
               </div>
 
-              <div className="space-y-4 text-xs">
+              {/* CARD 2: PENGATURAN UMUM & GAMBAR HERO */}
+              <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-6 shadow-2xs">
                 <div>
-                  <label className="block text-slate-700 mb-1.5 font-medium">Nama Brand Website</label>
-                  <input
-                    type="text"
-                    defaultValue="RepublikWeb.net"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
-                  />
+                  <h3 className="text-lg font-bold text-slate-900">Konfigurasi Brand & Banner Hero</h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Ganti gambar mockup beranda dan voucher member.
+                  </p>
                 </div>
 
-                <div>
-                  <label className="block text-slate-700 mb-1.5 font-medium">
-                    Nomor WhatsApp Customer Service / Sales
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="081234567890"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
-                  />
-                </div>
+                <div className="space-y-4 text-xs">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-medium">Nama Brand Website</label>
+                      <input
+                        type="text"
+                        defaultValue="RepublikWeb.net"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block text-slate-700 mb-1.5 font-medium">Kode Voucher Member Aktif</label>
-                  <input
-                    type="text"
-                    defaultValue="MEMBER15 (Diskon 15%)"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-slate-700 mb-1.5 font-medium">Gambar Awal Beranda (Hero Mockup)</label>
-                  <div className="flex items-center gap-3">
-                    {heroImage && (
-                      <div className="w-16 h-12 relative rounded-lg overflow-hidden border border-slate-200 shrink-0">
-                        <Image src={heroImage} alt="Hero Preview" fill className="object-cover" />
-                      </div>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            updateHeroImage(reader.result as string);
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:bg-white focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-[#00a68a] file:text-white hover:file:bg-[#008f76] cursor-pointer file:cursor-pointer"
-                    />
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-medium">Kode Voucher Member Aktif</label>
+                      <input
+                        type="text"
+                        defaultValue="MEMBER15 (Diskon 15%)"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => alert("Pengaturan berhasil disimpan!")}
-                    className="px-5 py-2.5 bg-[#00a68a] hover:bg-[#008f76] text-white font-bold rounded-xl transition-all shadow-sm shadow-[#00a68a]/20 cursor-pointer"
-                  >
-                    Simpan Perubahan
-                  </button>
+                  <div>
+                    <label className="block text-slate-700 mb-1.5 font-medium">Gambar Awal Beranda (Hero Mockup)</label>
+                    <div className="flex items-center gap-3">
+                      {heroImage && (
+                        <div className="w-20 h-14 relative rounded-xl overflow-hidden border border-slate-200 shrink-0 shadow-2xs">
+                          <Image src={heroImage} alt="Hero Preview" fill className="object-cover" />
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              updateHeroImage(reader.result as string);
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:bg-white focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-[#00a68a] file:text-white hover:file:bg-[#008f76] cursor-pointer file:cursor-pointer"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
