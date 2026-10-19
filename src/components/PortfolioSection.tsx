@@ -25,7 +25,7 @@ export default function PortfolioSection() {
 
   const handleInquiry = (item: PortfolioItem) => {
     const msg = `Halo RepublikWeb, saya melihat portofolio *${item.title}* (${item.category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?`;
-    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/6285749518867?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (

@@ -16,6 +16,9 @@ export default function AdminDashboardPage() {
     addTemplate,
     updateTemplate,
     deleteTemplate,
+    templateCategories,
+    addTemplateCategory,
+    deleteTemplateCategory,
     portfolios,
     addPortfolio,
     updatePortfolio,
@@ -71,6 +74,33 @@ export default function AdminDashboardPage() {
     description: "",
     image: "/template-agency.jpg",
   });
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [newCategoryInput, setNewCategoryInput] = useState("");
+  const [categoryModalNotice, setCategoryModalNotice] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [isAddingInlineCategory, setIsAddingInlineCategory] = useState(false);
+  const [inlineCategoryInput, setInlineCategoryInput] = useState("");
+  const [inlineCategoryFeedback, setInlineCategoryFeedback] = useState<{ isError: boolean; message: string } | null>(null);
+
+  const handleSaveInlineCategory = () => {
+    const trimmed = inlineCategoryInput.trim();
+    if (!trimmed) {
+      setInlineCategoryFeedback({ isError: true, message: "Nama kategori tidak boleh kosong" });
+      return;
+    }
+    const isNew = addTemplateCategory(trimmed);
+    setTemplateForm(prev => ({ ...prev, category: trimmed }));
+    setInlineCategoryInput("");
+    setInlineCategoryFeedback({
+      isError: false,
+      message: isNew
+        ? `✓ Kategori "${trimmed}" berhasil dibuat dan dipilih!`
+        : `✓ Kategori "${trimmed}" sudah ada dan dipilih!`,
+    });
+    setTimeout(() => {
+      setIsAddingInlineCategory(false);
+      setInlineCategoryFeedback(null);
+    }, 1200);
+  };
 
   // Modal: Portfolio CRUD
   const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
@@ -132,8 +162,9 @@ export default function AdminDashboardPage() {
 
   // Handle Logout
   const handleAdminLogout = () => {
-    logout();
-    router.push("/");
+    logout(() => {
+      router.push("/");
+    });
   };
 
   // Open Template Create
@@ -141,11 +172,14 @@ export default function AdminDashboardPage() {
     setEditingTemplateId(null);
     setTemplateForm({
       title: "",
-      category: "Agency",
+      category: templateCategories[0] || "Agency",
       price: "Rp 299.000",
       description: "Desain website modern, responsif, siap pakai dan mudah dikustomisasi.",
       image: "/template-agency.jpg",
     });
+    setIsAddingInlineCategory(false);
+    setInlineCategoryInput("");
+    setInlineCategoryFeedback(null);
     setIsTemplateModalOpen(true);
   };
 
@@ -159,6 +193,9 @@ export default function AdminDashboardPage() {
       description: item.description || "",
       image: item.image,
     });
+    setIsAddingInlineCategory(false);
+    setInlineCategoryInput("");
+    setInlineCategoryFeedback(null);
     setIsTemplateModalOpen(true);
   };
 
@@ -1081,21 +1118,32 @@ export default function AdminDashboardPage() {
                   </p>
                 </div>
 
-                <button
-                  onClick={handleOpenAddTemplate}
-                  className="px-4 py-2.5 bg-[#00a68a] hover:bg-[#008f76] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#00a68a]/20"
-                >
-                  <span>+ Tambah Template Baru</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIsCategoryModalOpen(true)}
+                    className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border border-slate-200"
+                  >
+                    <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                    <span>Kelola Kategori</span>
+                  </button>
+                  <button
+                    onClick={handleOpenAddTemplate}
+                    className="px-4 py-2.5 bg-[#00a68a] hover:bg-[#008f76] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#00a68a]/20"
+                  >
+                    <span>+ Tambah Template Baru</span>
+                  </button>
+                </div>
               </div>
 
               {/* Top Filters: Category Filter Tabs */}
               <div className="flex items-center gap-2 overflow-x-auto pb-3 border-b border-slate-200 scrollbar-none">
-                {["Semua", "Agency", "Restaurant", "Portfolio", "Company Profile", "E-Commerce", "UMKM", "Landing Page"].map((cat) => (
+                {["Semua", ...Array.from(new Set([...(templateCategories || []), ...templates.map(t => t.category).filter(Boolean)]))].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setTemplateFilterCategory(cat)}
-                    className={`px-3 py-1 rounded-lg text-xs font-medium cursor-pointer transition-all ${
+                    className={`px-3 py-1 rounded-lg text-xs font-medium cursor-pointer transition-all whitespace-nowrap ${
                       templateFilterCategory === cat
                         ? "bg-slate-900 text-white font-bold shadow-2xs"
                         : "bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -2155,20 +2203,106 @@ export default function AdminDashboardPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-700 mb-1 font-medium">Kategori</label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-slate-700 font-medium">Kategori</label>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsAddingInlineCategory(true);
+                          setInlineCategoryFeedback(null);
+                        }}
+                        className="text-[11px] text-[#00a68a] hover:underline font-bold"
+                      >
+                        + Buat Baru
+                      </button>
+                      <span className="text-slate-300">|</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCategoryModalNotice(null);
+                          setIsCategoryModalOpen(true);
+                        }}
+                        className="text-[11px] text-slate-500 hover:text-slate-800 hover:underline font-medium"
+                      >
+                        Kelola
+                      </button>
+                    </div>
+                  </div>
                   <select
                     value={templateForm.category}
-                    onChange={(e) => setTemplateForm({ ...templateForm, category: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                    onChange={(e) => {
+                      if (e.target.value === "__NEW__") {
+                        setIsAddingInlineCategory(true);
+                        setInlineCategoryFeedback(null);
+                      } else {
+                        setTemplateForm({ ...templateForm, category: e.target.value });
+                        setIsAddingInlineCategory(false);
+                      }
+                    }}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all font-medium"
                   >
-                    <option value="Agency">Agency</option>
-                    <option value="E-Commerce">E-Commerce</option>
-                    <option value="Restaurant">Restaurant</option>
-                    <option value="Portfolio">Portfolio</option>
-                    <option value="Company Profile">Company Profile</option>
-                    <option value="UMKM">UMKM</option>
-                    <option value="Landing Page">Landing Page</option>
+                    {Array.from(new Set([...(templateCategories || []), templateForm.category].filter(Boolean))).map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                    <option value="__NEW__" className="font-bold text-[#00a68a]">
+                      + Tambah Kategori Baru...
+                    </option>
                   </select>
+
+                  {/* Inline Add Category Input */}
+                  {isAddingInlineCategory && (
+                    <div className="mt-2 p-2.5 rounded-xl bg-teal-50/80 border border-teal-200 shadow-xs animate-in fade-in zoom-in-95 duration-150">
+                      <p className="text-[11px] font-bold text-teal-800 mb-1.5 flex items-center justify-between">
+                        <span>Nama Kategori Baru:</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsAddingInlineCategory(false);
+                            setInlineCategoryInput("");
+                            setInlineCategoryFeedback(null);
+                          }}
+                          className="text-slate-400 hover:text-slate-600 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </p>
+                      <div className="flex gap-1.5">
+                        <input
+                          type="text"
+                          value={inlineCategoryInput}
+                          onChange={(e) => {
+                            setInlineCategoryInput(e.target.value);
+                            if (inlineCategoryFeedback) setInlineCategoryFeedback(null);
+                          }}
+                          placeholder="Mis: Otomotif, Edukasi..."
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              handleSaveInlineCategory();
+                            }
+                          }}
+                          className="flex-1 px-2.5 py-1.5 rounded-lg bg-white border border-teal-300 text-slate-900 text-xs focus:ring-2 focus:ring-[#00a68a] focus:outline-none font-medium"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleSaveInlineCategory}
+                          disabled={!inlineCategoryInput.trim()}
+                          className="px-3 py-1.5 bg-[#00a68a] hover:bg-[#008f76] disabled:opacity-50 text-white rounded-lg text-xs font-bold transition-all cursor-pointer shadow-xs shrink-0"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                      {inlineCategoryFeedback && (
+                        <p className={`text-[10px] mt-1.5 font-semibold ${inlineCategoryFeedback.isError ? "text-rose-600" : "text-teal-700"}`}>
+                          {inlineCategoryFeedback.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -2601,6 +2735,137 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ===================== MODAL: KELOLA KATEGORI TEMPLATE ===================== */}
+      {isCategoryModalOpen && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-100 flex items-center justify-center text-[#00a68a]">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-800">Kelola Kategori Template</h3>
+                  <p className="text-xs text-slate-500">Tambah atau hapus kategori template website</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsCategoryModalOpen(false);
+                  setCategoryModalNotice(null);
+                }}
+                className="w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Input Tambah Kategori Baru */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const trimmed = newCategoryInput.trim();
+                if (!trimmed) {
+                  setCategoryModalNotice({ type: "error", message: "Nama kategori tidak boleh kosong!" });
+                  return;
+                }
+                const isNew = addTemplateCategory(trimmed);
+                setTemplateForm((prev) => ({ ...prev, category: trimmed }));
+                setNewCategoryInput("");
+                if (isNew) {
+                  setCategoryModalNotice({ type: "success", message: `✓ Kategori "${trimmed}" berhasil ditambahkan & dipilih!` });
+                } else {
+                  setCategoryModalNotice({ type: "error", message: `Kategori "${trimmed}" sudah ada (otomatis dipilih).` });
+                }
+                setTimeout(() => setCategoryModalNotice(null), 3000);
+              }}
+              className="mt-4"
+            >
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newCategoryInput}
+                  onChange={(e) => {
+                    setNewCategoryInput(e.target.value);
+                    if (categoryModalNotice) setCategoryModalNotice(null);
+                  }}
+                  placeholder="Nama kategori baru (mis: Pendidikan, Hotel...)"
+                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:bg-white focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                />
+                <button
+                  type="submit"
+                  disabled={!newCategoryInput.trim()}
+                  className="px-4 py-2.5 bg-[#00a68a] hover:bg-[#008f76] disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all shadow-sm shadow-[#00a68a]/20 cursor-pointer shrink-0"
+                >
+                  + Tambah
+                </button>
+              </div>
+
+              {categoryModalNotice && (
+                <div
+                  className={`mt-2.5 p-2.5 rounded-xl text-[11px] font-semibold flex items-center gap-1.5 animate-in fade-in duration-150 ${
+                    categoryModalNotice.type === "success"
+                      ? "bg-teal-50 text-teal-800 border border-teal-200"
+                      : "bg-amber-50 text-amber-800 border border-amber-200"
+                  }`}
+                >
+                  <span>{categoryModalNotice.message}</span>
+                </div>
+              )}
+            </form>
+
+            {/* Daftar Kategori Saat Ini */}
+            <div className="mt-5">
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                Daftar Kategori ({templateCategories.length})
+              </label>
+              <div className="max-h-60 overflow-y-auto space-y-1.5 pr-1">
+                {templateCategories.map((cat) => (
+                  <div
+                    key={cat}
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-all text-xs"
+                  >
+                    <span className="font-semibold text-slate-700">{cat}</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm(`Hapus kategori "${cat}"?`)) {
+                          deleteTemplateCategory(cat);
+                          setCategoryModalNotice({ type: "success", message: `Kategori "${cat}" telah dihapus.` });
+                          setTimeout(() => setCategoryModalNotice(null), 2500);
+                        }
+                      }}
+                      className="p-1 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer"
+                      title="Hapus Kategori"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsCategoryModalOpen(false);
+                  setCategoryModalNotice(null);
+                }}
+                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl transition-all cursor-pointer shadow-xs"
+              >
+                Selesai
+              </button>
+            </div>
           </div>
         </div>
       )}

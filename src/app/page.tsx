@@ -122,9 +122,14 @@ export default function Home() {
                   Login
                 </button>
               )}
-              <button className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-5 py-2 rounded-full text-[13.5px] font-semibold transition-all shadow-sm cursor-pointer">
+              <a
+                href="https://wa.me/6285749518867?text=Halo%20RepublikWeb,%20saya%20tertarik%20untuk%20memulai%20project%20website.%20Boleh%20konsultasi%20terlebih%20dahulu?"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-5 py-2 rounded-full text-[13.5px] font-semibold transition-all shadow-sm cursor-pointer inline-flex items-center justify-center"
+              >
                 Mulai Project
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -149,13 +154,18 @@ export default function Home() {
             </p>
             
             <div className="flex flex-wrap items-center gap-3.5 mb-14">
-              <button className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-6 py-2.5 md:px-7 md:py-3 rounded-full font-bold text-sm flex items-center gap-2 transition-all shadow-[0_8px_20px_rgba(0,166,138,0.3)] hover:shadow-[0_10px_25px_rgba(0,166,138,0.4)]">
+              <a
+                href="https://wa.me/6285749518867?text=Halo%20RepublikWeb,%20saya%20tertarik%20untuk%20memulai%20project%20website.%20Boleh%20konsultasi%20terlebih%20dahulu?"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-6 py-2.5 md:px-7 md:py-3 rounded-full font-bold text-sm flex items-center gap-2 transition-all shadow-[0_8px_20px_rgba(0,166,138,0.3)] hover:shadow-[0_10px_25px_rgba(0,166,138,0.4)]"
+              >
                 Mulai Project
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
                 </svg>
-              </button>
+              </a>
               <Link href="#template" className="bg-white border-2 border-gray-200 hover:border-[#00a68a]/50 hover:bg-gray-50/80 active:scale-95 text-[#1e293b] px-6 py-2.5 md:px-7 md:py-3 rounded-full font-bold text-sm transition-all shadow-sm inline-block">
                 Jelajahi Template
               </Link>

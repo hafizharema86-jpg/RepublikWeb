@@ -70,7 +70,7 @@ export default function Footer() {
             {/* Right CTA buttons */}
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
               <a
-                href="https://wa.me/6281234567890?text=Halo%20RepublikWeb,%20saya%20ingin%20konsultasi%20project%20website"
+                href="https://wa.me/6285749518867?text=Halo%20RepublikWeb,%20saya%20ingin%20konsultasi%20project%20website"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#00a68a] hover:bg-[#00bf9f] text-white font-semibold text-sm transition-all duration-200 active:scale-95 shadow-lg shadow-[#00a68a]/30 group"
@@ -128,7 +128,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               {/* WhatsApp */}
               <a
-                href="https://wa.me/6281234567890"
+                href="https://wa.me/6285749518867"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"

@@ -14,12 +14,17 @@ interface AuthContextType {
   user: UserProfile | null;
   isLoggedIn: boolean;
   login: (email: string, name?: string, phone?: string) => "admin" | "user";
-  logout: () => void;
+  logout: (onConfirmCallback?: (() => void) | React.MouseEvent | unknown) => void;
+  confirmLogout: () => void;
+  cancelLogout: () => void;
+  isLogoutConfirmOpen: boolean;
   toggleSaveTemplate: (templateId: string) => boolean; // Returns true if saved, false if unsaved
   isTemplateSaved: (templateId: string) => boolean;
-  openLoginModal: (redirectAction?: string) => void;
+  openLoginModal: (redirectAction?: (() => void) | string) => void;
   closeLoginModal: () => void;
   isLoginModalOpen: boolean;
+  loginSuccessCallback: (() => void) | null;
+  triggerPostLoginAction: () => void;
   isDashboardOpen: boolean;
   openDashboard: () => void;
   closeDashboard: () => void;
@@ -31,6 +36,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
+  const [pendingLogoutCallback, setPendingLogoutCallback] = useState<(() => void) | null>(null);
 
   // Load user from localStorage on initial render
   useEffect(() => {
@@ -56,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email: cleanEmail,
       phone: phone || "08123456789",
       role: isAdmin ? "admin" : "user",
-      savedTemplates: user?.savedTemplates || ["1"], // Default initial saved template demo
+      savedTemplates: user?.savedTemplates || [], // Default initial saved template demo kosong
     };
     setUser(newUser);
     localStorage.setItem("republikweb_user", JSON.stringify(newUser));
@@ -64,10 +71,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return newUser.role;
   };
 
-  const logout = () => {
+  const logout = (onConfirmCallback?: (() => void) | React.MouseEvent | unknown) => {
+    if (typeof onConfirmCallback === "function") {
+      setPendingLogoutCallback(() => onConfirmCallback as () => void);
+    } else {
+      setPendingLogoutCallback(null);
+    }
+    setIsLogoutConfirmOpen(true);
+  };
+
+  const confirmLogout = () => {
     setUser(null);
     localStorage.removeItem("republikweb_user");
     setIsDashboardOpen(false);
+    setIsLogoutConfirmOpen(false);
+    if (pendingLogoutCallback) {
+      pendingLogoutCallback();
+      setPendingLogoutCallback(null);
+    }
+  };
+
+  const cancelLogout = () => {
+    setIsLogoutConfirmOpen(false);
+    setPendingLogoutCallback(null);
   };
 
   const toggleSaveTemplate = (templateId: string): boolean => {
@@ -91,8 +117,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return user ? user.savedTemplates.includes(templateId) : false;
   };
 
-  const openLoginModal = () => setIsLoginModalOpen(true);
-  const closeLoginModal = () => setIsLoginModalOpen(false);
+  const [postLoginCallback, setPostLoginCallback] = useState<(() => void) | null>(null);
+
+  const openLoginModal = (redirectAction?: (() => void) | string) => {
+    if (typeof redirectAction === "function") {
+      setPostLoginCallback(() => redirectAction);
+    } else {
+      setPostLoginCallback(null);
+    }
+    setIsLoginModalOpen(true);
+  };
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+    setPostLoginCallback(null);
+  };
+
+  const triggerPostLoginAction = () => {
+    if (postLoginCallback) {
+      const cb = postLoginCallback;
+      setPostLoginCallback(null);
+      cb();
+    }
+  };
 
   const openDashboard = () => setIsDashboardOpen(true);
   const closeDashboard = () => setIsDashboardOpen(false);
@@ -104,11 +151,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoggedIn: !!user,
         login,
         logout,
+        confirmLogout,
+        cancelLogout,
+        isLogoutConfirmOpen,
         toggleSaveTemplate,
         isTemplateSaved,
         openLoginModal,
         closeLoginModal,
         isLoginModalOpen,
+        loginSuccessCallback: postLoginCallback,
+        triggerPostLoginAction,
         isDashboardOpen,
         openDashboard,
         closeDashboard,

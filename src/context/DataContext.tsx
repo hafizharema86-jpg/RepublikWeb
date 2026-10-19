@@ -78,6 +78,9 @@ interface DataContextType {
   addTemplate: (item: Omit<Template, "id">) => void;
   updateTemplate: (id: string, item: Partial<Template>) => void;
   deleteTemplate: (id: string) => void;
+  templateCategories: string[];
+  addTemplateCategory: (category: string) => boolean;
+  deleteTemplateCategory: (category: string) => void;
 
   portfolios: PortfolioItem[];
   addPortfolio: (item: Omit<PortfolioItem, "id">) => void;
@@ -363,15 +366,27 @@ const defaultSiteContent: SiteContent = {
   solutionTitle: "Siap Memulai Project Digital Anda?",
   solutionSubtitle: "Pilih jalur yang paling sesuai dengan kebutuhan dan timeline bisnis Anda.",
   contactEmail: "halo@republikweb.net",
-  contactWhatsapp: "+62 812-3456-7890",
+  contactWhatsapp: "+62 857-4951-8867",
   contactHours: "Senin – Sabtu, 09.00 – 18.00 WIB",
   contactLocation: "Jakarta & Yogyakarta, Indonesia",
 };
+
+const initialTemplateCategories = [
+  "Agency",
+  "Company Profile",
+  "Landing Page",
+  "E-Commerce",
+  "Restaurant",
+  "Portfolio",
+  "UMKM",
+  "Personal",
+];
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const [templates, setTemplates] = useState<Template[]>(defaultTemplates);
+  const [templateCategories, setTemplateCategories] = useState<string[]>(initialTemplateCategories);
   const [portfolios, setPortfolios] = useState<PortfolioItem[]>(defaultPortfolios);
   const [messages, setMessages] = useState<ClientMessage[]>(defaultMessages);
   const [heroImage, setHeroImage] = useState<string>("/hero-mockup.jpg");
@@ -391,6 +406,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setTemplates(cleaned);
       } else {
         localStorage.setItem("rw_templates", JSON.stringify(defaultTemplates));
+      }
+
+      const savedCategories = localStorage.getItem("rw_template_categories");
+      if (savedCategories) {
+        try {
+          const parsed = JSON.parse(savedCategories);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setTemplateCategories(parsed);
+          } else {
+            setTemplateCategories(initialTemplateCategories);
+          }
+        } catch {
+          setTemplateCategories(initialTemplateCategories);
+        }
+      } else {
+        localStorage.setItem("rw_template_categories", JSON.stringify(initialTemplateCategories));
       }
 
       const savedPortfolios = localStorage.getItem("rw_portfolios");
@@ -419,6 +450,40 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       // Ignore
     }
   }, []);
+
+  const addTemplateCategory = (category: string): boolean => {
+    const trimmed = category.trim();
+    if (!trimmed) return false;
+    let isNew = false;
+    setTemplateCategories((prev) => {
+      const current = Array.isArray(prev) ? prev : initialTemplateCategories;
+      if (current.some((c) => c.toLowerCase() === trimmed.toLowerCase())) {
+        return current;
+      }
+      isNew = true;
+      const updated = [...current, trimmed];
+      try {
+        localStorage.setItem("rw_template_categories", JSON.stringify(updated));
+      } catch (err) {
+        console.error("Gagal menyimpan kategori:", err);
+      }
+      return updated;
+    });
+    return isNew;
+  };
+
+  const deleteTemplateCategory = (category: string) => {
+    setTemplateCategories((prev) => {
+      const current = Array.isArray(prev) ? prev : initialTemplateCategories;
+      const updated = current.filter((c) => c.toLowerCase() !== category.toLowerCase());
+      try {
+        localStorage.setItem("rw_template_categories", JSON.stringify(updated));
+      } catch (err) {
+        console.error("Gagal menyimpan kategori setelah hapus:", err);
+      }
+      return updated;
+    });
+  };
 
   const updateHeroImage = (image: string) => {
     setHeroImage(image);
@@ -569,6 +634,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         addTemplate,
         updateTemplate,
         deleteTemplate,
+        templateCategories,
+        addTemplateCategory,
+        deleteTemplateCategory,
         portfolios,
         addPortfolio,
         updatePortfolio,

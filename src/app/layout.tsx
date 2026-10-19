@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { DataProvider } from "@/context/DataContext";
+import LogoutConfirmModal from "@/components/LogoutConfirmModal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,7 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="min-h-full flex flex-col font-sans">
         <AuthProvider>
-          <DataProvider>{children}</DataProvider>
+          <DataProvider>
+            {children}
+            <LogoutConfirmModal />
+          </DataProvider>
         </AuthProvider>
       </body>
     </html>

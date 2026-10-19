@@ -40,10 +40,7 @@ const sampleTemplates: Record<string, { title: string; category: string; price: 
 
 export default function MemberDashboardModal() {
   const { user, isDashboardOpen, closeDashboard, logout, toggleSaveTemplate } = useAuth();
-  const { templates, addMessage } = useData();
-  const [activeTab, setActiveTab] = useState<"favorit" | "promo" | "pesan">("favorit");
-  const [messageText, setMessageText] = useState("");
-  const [messageSent, setMessageSent] = useState(false);
+  const { templates } = useData();
 
   if (!isDashboardOpen || !user) return null;
 
@@ -51,23 +48,6 @@ export default function MemberDashboardModal() {
     .map((id) => templates.find((t) => t.id === id) || (sampleTemplates[id] ? { id, ...sampleTemplates[id] } : null))
     .filter(Boolean) as (Template | { id: string; title: string; category: string; price: string; image: string })[];
 
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!messageText.trim()) return;
-
-    addMessage({
-      senderName: user.name,
-      whatsapp: user.phone || "081234567890",
-      serviceType: "Konsultasi Member Prioritas",
-      message: messageText,
-    });
-
-    setMessageSent(true);
-    setTimeout(() => {
-      setMessageText("");
-      setMessageSent(false);
-    }, 2500);
-  };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
@@ -122,47 +102,16 @@ export default function MemberDashboardModal() {
 
         {/* Feature Navigation Tabs */}
         <div className="flex items-center gap-2 mt-5 mb-6 border-b border-gray-100 pb-3">
-          <button
-            onClick={() => setActiveTab("favorit")}
-            className={`px-4 py-2 text-xs md:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === "favorit"
-                ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
-                : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-            }`}
-          >
+          <div className="px-4 py-2 text-xs md:text-sm font-bold rounded-xl bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20 flex items-center gap-1.5">
             <span>Template Disimpan</span>
             <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20">
               {savedList.length}
             </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("promo")}
-            className={`px-4 py-2 text-xs md:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === "promo"
-                ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
-                : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            <span>Diskon Eksklusif</span>
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab("pesan")}
-            className={`px-4 py-2 text-xs md:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === "pesan"
-                ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
-                : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            <span>Konsultasi Privat</span>
-          </button>
+          </div>
         </div>
 
-        {/* Tab 1: Saved Templates */}
-        {activeTab === "favorit" && (
-          <div>
+        {/* Saved Templates List */}
+        <div>
             <div className="flex items-center justify-between mb-3.5">
               <h4 className="text-sm font-bold text-gray-800">
                 Template Yang Anda Favoritkan ({savedList.length})
@@ -220,96 +169,6 @@ export default function MemberDashboardModal() {
               </div>
             )}
           </div>
-        )}
-
-        {/* Tab 2: Promo Eksklusif Member */}
-        {activeTab === "promo" && (
-          <div className="space-y-4">
-            <div className="p-4 bg-gradient-to-r from-emerald-50 via-teal-50 to-cyan-50 border border-emerald-200/80 rounded-2xl relative overflow-hidden">
-              <span className="text-xs font-extrabold uppercase text-[#00a68a] tracking-wider block mb-1">
-                KEUNTUNGAN KHUSUS MEMBER TERDAFTAR
-              </span>
-              <h4 className="text-base font-bold text-gray-800">
-                Diskon 15% Untuk Order Pembuatan Website Pertama
-              </h4>
-              <p className="text-xs text-gray-600 mt-1">
-                Gunakan kode voucher ini saat memesan landing page atau custom website di RepublikWeb.
-              </p>
-
-              <div className="mt-3 inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-emerald-300 shadow-xs">
-                <span className="text-xs text-gray-500">Kode Kupon:</span>
-                <span className="font-bold text-[#00a68a] text-sm">MEMBER15</span>
-              </div>
-            </div>
-
-            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-200 text-xs text-gray-600 space-y-2">
-              <p className="font-bold text-gray-800">Keuntungan Member Lainnya:</p>
-              <div className="flex items-center gap-2">
-                <svg className="w-3.5 h-3.5 text-[#00a68a] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                <span>Gratis konsultasi konsep &amp; struktur landing page (30 menit).</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-3.5 h-3.5 text-[#00a68a] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                <span>Prioritas antrian pengerjaan lebih cepat.</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-3.5 h-3.5 text-[#00a68a] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                <span>Gratis setup domain &amp; hosting selama 1 tahun pertama.</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Tab 3: Konsultasi Bebas Spam */}
-        {activeTab === "pesan" && (
-          <div>
-            <div className="mb-3">
-              <h4 className="text-sm font-bold text-gray-800">
-                Kirim Pertanyaan / Rencana Project Anda
-              </h4>
-              <p className="text-xs text-gray-500">
-                Karena Anda sudah login, pesan Anda langsung terkirim dengan status <strong>Terverifikasi (Prioritas)</strong> tanpa dicek spam bot.
-              </p>
-            </div>
-
-            {messageSent ? (
-              <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-center text-emerald-800">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p className="text-sm font-bold">Pesan Anda Berhasil Terkirim!</p>
-                <p className="text-xs text-emerald-700 mt-1">
-                  Tim konsultan RepublikWeb akan menghubungi WhatsApp Anda dalam 15 menit.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSendMessage} className="space-y-3">
-                <textarea
-                  rows={4}
-                  value={messageText}
-                  onChange={(e) => setMessageText(e.target.value)}
-                  placeholder="Ceritakan jenis website yang ingin Anda buat (contoh: Website Toko Baju Online atau Landing Page Kursus)..."
-                  required
-                  className="w-full p-3.5 rounded-2xl bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#00a68a] focus:bg-white transition-all resize-none"
-                />
-                <button
-                  type="submit"
-                  className="w-full py-2.5 bg-[#00a68a] hover:bg-[#008f76] text-white font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer"
-                >
-                  Kirim Pesan Prioritas Sekarang →
-                </button>
-              </form>
-            )}
-          </div>
-        )}
 
         {/* Modal Bottom Actions */}
         <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">

@@ -18,8 +18,8 @@ const defaultCategories = [
 ];
 
 export default function TemplateSection() {
-  const { toggleSaveTemplate, isTemplateSaved } = useAuth();
-  const { templates } = useData();
+  const { user, isLoggedIn, openLoginModal, toggleSaveTemplate, isTemplateSaved } = useAuth();
+  const { templates, templateCategories, siteContent } = useData();
 
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
@@ -27,7 +27,7 @@ export default function TemplateSection() {
   // Derive all unique categories dynamically, always keeping "Semua" first
   const existingCategories = Array.from(new Set(templates.map((t) => t.category).filter(Boolean)));
   const combinedCategories = Array.from(
-    new Set(["Semua", ...defaultCategories.slice(1), ...existingCategories])
+    new Set(["Semua", ...(templateCategories || defaultCategories), ...existingCategories])
   );
 
   // Filter templates based on category
@@ -38,9 +38,45 @@ export default function TemplateSection() {
     return true;
   });
 
+  const sendOrderWhatsapp = (template: Template, currentUser?: { name?: string; email?: string; phone?: string }) => {
+    let rawWa = (siteContent?.contactWhatsapp || "085749518867").replace(/[^0-9]/g, "");
+    if (rawWa.startsWith("0")) {
+      rawWa = "62" + rawWa.slice(1);
+    }
+    const waNumber = rawWa || "6285749518867";
+    const clientName = currentUser?.name || user?.name || "Klien";
+    const clientPhone = currentUser?.phone || user?.phone || "-";
+    const clientEmail = currentUser?.email || user?.email || "-";
+
+    const msg = [
+      `Halo RepublikWeb, saya ingin memesan template website:`,
+      ``,
+      `*Detail Template:*`,
+      `• Nama Template : *${template.title}*`,
+      `• Kategori : ${template.category}`,
+      `• Harga Lisensi : *${template.price}*`,
+      ``,
+      `*Data Pemesan:*`,
+      `• Nama Lengkap : ${clientName}`,
+      `• Email : ${clientEmail}`,
+      `• WhatsApp : ${clientPhone}`,
+      ``,
+      `Mohon dibantu proses pemesanan & setup template ini. Terima kasih!`,
+    ].join("\n");
+
+    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
+  };
+
   const handleOrderWhatsapp = (template: Template) => {
-    const msg = `Halo RepublikWeb, saya tertarik dengan template *${template.title}* (${template.price}). Bagaimana cara memulai pemesanannya?`;
-    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`, "_blank");
+    if (!isLoggedIn) {
+      // Jika belum login, buka modal login dan set aksi pesanan otomatis setelah berhasil login
+      openLoginModal(() => {
+        sendOrderWhatsapp(template);
+      });
+      return;
+    }
+
+    sendOrderWhatsapp(template);
   };
 
   return (
@@ -158,9 +194,9 @@ export default function TemplateSection() {
                       </button>
                       <button
                         onClick={() => handleOrderWhatsapp(template)}
-                        className="px-3.5 py-1.5 rounded-full text-[11px] font-bold shadow-sm text-white transition-colors cursor-pointer bg-[#00a68a] hover:bg-[#008f76]"
+                        className="px-3.5 py-1.5 rounded-full text-[11px] font-bold shadow-sm text-white transition-colors cursor-pointer bg-[#00a68a] hover:bg-[#008f76] flex items-center gap-1"
                       >
-                        Gunakan Template
+                        <span>Pesan via WhatsApp</span>
                       </button>
                     </div>
                   </div>
@@ -217,7 +253,7 @@ export default function TemplateSection() {
                     onClick={() => handleOrderWhatsapp(template)}
                     className="text-xs font-bold flex items-center gap-1.5 px-3 py-1.5 rounded-xl cursor-pointer transition-all bg-[#00a68a] hover:bg-[#008f76] text-white shadow-xs"
                   >
-                    <span>Gunakan Template</span>
+                    <span>Pesan via WhatsApp</span>
                     <span>→</span>
                   </button>
                 </div>
@@ -364,7 +400,7 @@ function LivePreviewModal({
             onClick={onOrder}
             className="px-4 py-2 rounded-xl text-xs font-extrabold text-white shadow-md transition-all cursor-pointer flex items-center gap-1.5 bg-[#00a68a] hover:bg-[#008f76]"
           >
-            <span>Gunakan Template</span>
+            <span>Pesan via WhatsApp</span>
           </button>
         </div>
       </div>

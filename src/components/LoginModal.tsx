@@ -13,7 +13,7 @@ interface LoginModalProps {
 
 export default function LoginModal({ isOpen, onClose, initialMode = "login" }: LoginModalProps) {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, triggerPostLoginAction } = useAuth();
   const [mode, setMode] = useState<"login" | "register">(initialMode);
   
   // Login State
@@ -89,6 +89,7 @@ export default function LoginModal({ isOpen, onClose, initialMode = "login" }: L
         });
         setTimeout(() => {
           onClose();
+          triggerPostLoginAction();
         }, 1000);
       }
     }, 700);
@@ -129,6 +130,7 @@ export default function LoginModal({ isOpen, onClose, initialMode = "login" }: L
       });
       setTimeout(() => {
         onClose();
+        triggerPostLoginAction();
       }, 1000);
     }, 800);
   };
