@@ -71,6 +71,13 @@ export interface SiteContent {
   contactWhatsapp: string;
   contactHours: string;
   contactLocation: string;
+  // Social Media Links
+  socialInstagram: string;
+  socialLinkedin: string;
+  // Template Pesan WhatsApp
+  waTemplateOrder: string;
+  waTemplateInquiry: string;
+  waTemplateConsultation: string;
 }
 
 interface DataContextType {
@@ -94,6 +101,9 @@ interface DataContextType {
 
   heroImage: string;
   updateHeroImage: (image: string) => void;
+
+  siteLogo: string;
+  updateSiteLogo: (logo: string) => void;
 
   testimonials: TestimonialItem[];
   addTestimonial: (item: Omit<TestimonialItem, "id">) => void;
@@ -369,6 +379,11 @@ const defaultSiteContent: SiteContent = {
   contactWhatsapp: "+62 857-4951-8867",
   contactHours: "Senin – Sabtu, 09.00 – 18.00 WIB",
   contactLocation: "Jakarta & Yogyakarta, Indonesia",
+  socialInstagram: "https://instagram.com/republikweb",
+  socialLinkedin: "https://linkedin.com/company/republikweb",
+  waTemplateOrder: "Halo RepublikWeb, saya ingin memesan template website:\n\n*Detail Template:*\n• Nama Template : *{title}*\n• Kategori : {category}\n• Harga Lisensi : *{price}*\n\n*Data Pemesan:*\n• Nama Lengkap : {name}\n• Email : {email}\n• WhatsApp : {phone}\n\nMohon dibantu proses pemesanan & setup template ini. Terima kasih!",
+  waTemplateInquiry: "Halo RepublikWeb, saya melihat portofolio *{title}* ({category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?",
+  waTemplateConsultation: "Halo RepublikWeb, saya tertarik untuk memulai project website. Boleh konsultasi terlebih dahulu?",
 };
 
 const initialTemplateCategories = [
@@ -390,6 +405,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [portfolios, setPortfolios] = useState<PortfolioItem[]>(defaultPortfolios);
   const [messages, setMessages] = useState<ClientMessage[]>(defaultMessages);
   const [heroImage, setHeroImage] = useState<string>("/hero-mockup.jpg");
+  const [siteLogo, setSiteLogo] = useState<string>("");
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>(defaultTestimonials);
   const [aboutFeatures, setAboutFeatures] = useState<AboutFeatureItem[]>(defaultAboutFeatures);
   const [processSteps, setProcessSteps] = useState<ProcessStepItem[]>(defaultProcessSteps);
@@ -432,6 +448,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       const savedHero = localStorage.getItem("rw_hero_image");
       if (savedHero) setHeroImage(savedHero);
+
+      const savedLogo = localStorage.getItem("rw_site_logo");
+      if (savedLogo) setSiteLogo(savedLogo);
 
       const savedTestimonials = localStorage.getItem("rw_testimonials");
       if (savedTestimonials) setTestimonials(JSON.parse(savedTestimonials));
@@ -488,6 +507,11 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const updateHeroImage = (image: string) => {
     setHeroImage(image);
     localStorage.setItem("rw_hero_image", image);
+  };
+
+  const updateSiteLogo = (logo: string) => {
+    setSiteLogo(logo);
+    localStorage.setItem("rw_site_logo", logo);
   };
 
   // CRUD Template
@@ -647,6 +671,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         deleteMessage,
         heroImage,
         updateHeroImage,
+        siteLogo,
+        updateSiteLogo,
         testimonials,
         addTestimonial,
         updateTestimonial,

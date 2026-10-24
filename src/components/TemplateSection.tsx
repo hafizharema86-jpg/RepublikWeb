@@ -48,21 +48,29 @@ export default function TemplateSection() {
     const clientPhone = currentUser?.phone || user?.phone || "-";
     const clientEmail = currentUser?.email || user?.email || "-";
 
-    const msg = [
+    const rawTemplate = siteContent?.waTemplateOrder || [
       `Halo RepublikWeb, saya ingin memesan template website:`,
       ``,
       `*Detail Template:*`,
-      `• Nama Template : *${template.title}*`,
-      `• Kategori : ${template.category}`,
-      `• Harga Lisensi : *${template.price}*`,
+      `• Nama Template : *{title}*`,
+      `• Kategori : {category}`,
+      `• Harga Lisensi : *{price}*`,
       ``,
       `*Data Pemesan:*`,
-      `• Nama Lengkap : ${clientName}`,
-      `• Email : ${clientEmail}`,
-      `• WhatsApp : ${clientPhone}`,
+      `• Nama Lengkap : {name}`,
+      `• Email : {email}`,
+      `• WhatsApp : {phone}`,
       ``,
       `Mohon dibantu proses pemesanan & setup template ini. Terima kasih!`,
     ].join("\n");
+
+    const msg = rawTemplate
+      .replace(/{title}/g, template.title)
+      .replace(/{category}/g, template.category)
+      .replace(/{price}/g, template.price)
+      .replace(/{name}/g, clientName)
+      .replace(/{email}/g, clientEmail)
+      .replace(/{phone}/g, clientPhone);
 
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
   };

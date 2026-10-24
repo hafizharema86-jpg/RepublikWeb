@@ -19,7 +19,15 @@ import { useData } from "@/context/DataContext";
 
 export default function Home() {
   const { user, isLoggedIn, isLoginModalOpen, openLoginModal, closeLoginModal, openDashboard, logout } = useAuth();
-  const { heroImage, siteContent } = useData();
+  const { heroImage, siteContent, siteLogo } = useData();
+
+  let rawWa = (siteContent?.contactWhatsapp || "085749518867").replace(/[^0-9]/g, "");
+  if (rawWa.startsWith("0")) {
+    rawWa = "62" + rawWa.slice(1);
+  }
+  const waNumber = rawWa || "6285749518867";
+  const consultMsg = siteContent?.waTemplateConsultation || "Halo RepublikWeb, saya tertarik untuk memulai project website. Boleh konsultasi terlebih dahulu?";
+  const waConsultationLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(consultMsg)}`;
 
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#eef2f6] via-[#e2e8f0] to-[#d1d9e6] font-sans text-[#1a1a1a] relative">
@@ -28,9 +36,15 @@ export default function Home() {
         <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20 py-3.5 flex items-center justify-between">
           {/* Brand Logo */}
           <div className="flex items-center gap-2.5 cursor-pointer">
-            <div className="w-8 h-8 rounded-full bg-[#00a68a] text-white flex items-center justify-center font-bold text-sm shadow-xs">
-              R
-            </div>
+            {siteLogo ? (
+              <div className="w-8 h-8 rounded-full overflow-hidden relative border border-gray-200/70 shrink-0 shadow-xs">
+                <Image src={siteLogo} alt="Logo" fill className="object-cover" />
+              </div>
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-[#00a68a] text-white flex items-center justify-center font-bold text-sm shadow-xs">
+                R
+              </div>
+            )}
             <span className="font-bold text-xl tracking-tight text-[#1a1a1a]">
               RepublikWeb<span className="text-[#00a68a]">.net</span>
             </span>
@@ -84,9 +98,15 @@ export default function Home() {
                     className="bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-200 text-[#00a68a] text-xs md:text-sm font-bold px-3 py-1.5 md:px-3.5 md:py-1.5 rounded-full transition-all flex items-center gap-2 cursor-pointer shadow-xs"
                     title="Buka Menu Akun"
                   >
-                    <span className="w-5 h-5 rounded-full bg-[#00a68a] text-white flex items-center justify-center text-[11px] font-black">
-                      {user?.name.charAt(0).toUpperCase()}
-                    </span>
+                    {user?.role === "admin" && siteLogo ? (
+                      <span className="w-5 h-5 rounded-full overflow-hidden relative border border-emerald-300 shrink-0">
+                        <Image src={siteLogo} alt={user.name} fill className="object-cover" />
+                      </span>
+                    ) : (
+                      <span className="w-5 h-5 rounded-full bg-[#00a68a] text-white flex items-center justify-center text-[11px] font-black">
+                        {user?.name.charAt(0).toUpperCase()}
+                      </span>
+                    )}
                     <span>{user?.name.split(" ")[0]}</span>
                     {user && user.savedTemplates.length > 0 && (
                       <span className="text-[10px] bg-[#00a68a] text-white px-1.5 py-0.5 rounded-full font-bold flex items-center gap-1">
@@ -123,7 +143,7 @@ export default function Home() {
                 </button>
               )}
               <a
-                href="https://wa.me/6285749518867?text=Halo%20RepublikWeb,%20saya%20tertarik%20untuk%20memulai%20project%20website.%20Boleh%20konsultasi%20terlebih%20dahulu?"
+                href={waConsultationLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-5 py-2 rounded-full text-[13.5px] font-semibold transition-all shadow-sm cursor-pointer inline-flex items-center justify-center"
@@ -155,7 +175,7 @@ export default function Home() {
             
             <div className="flex flex-wrap items-center gap-3.5 mb-14">
               <a
-                href="https://wa.me/6285749518867?text=Halo%20RepublikWeb,%20saya%20tertarik%20untuk%20memulai%20project%20website.%20Boleh%20konsultasi%20terlebih%20dahulu?"
+                href={waConsultationLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-6 py-2.5 md:px-7 md:py-3 rounded-full font-bold text-sm flex items-center gap-2 transition-all shadow-[0_8px_20px_rgba(0,166,138,0.3)] hover:shadow-[0_10px_25px_rgba(0,166,138,0.4)]"

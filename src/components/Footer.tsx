@@ -2,12 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useData } from "@/context/DataContext";
 
 export default function Footer() {
-  const { siteContent } = useData();
+  const { siteContent, siteLogo } = useData();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+
+  let rawWa = (siteContent?.contactWhatsapp || "085749518867").replace(/[^0-9]/g, "");
+  if (rawWa.startsWith("0")) {
+    rawWa = "62" + rawWa.slice(1);
+  }
+  const waNumber = rawWa || "6285749518867";
+  const consultMsg = siteContent?.waTemplateConsultation || "Halo RepublikWeb, saya tertarik untuk memulai project website. Boleh konsultasi terlebih dahulu?";
+  const waConsultationLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(consultMsg)}`;
+  const waDirectLink = `https://wa.me/${waNumber}`;
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +80,7 @@ export default function Footer() {
             {/* Right CTA buttons */}
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
               <a
-                href="https://wa.me/6285749518867?text=Halo%20RepublikWeb,%20saya%20ingin%20konsultasi%20project%20website"
+                href={waConsultationLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#00a68a] hover:bg-[#00bf9f] text-white font-semibold text-sm transition-all duration-200 active:scale-95 shadow-lg shadow-[#00a68a]/30 group"
@@ -105,9 +115,15 @@ export default function Footer() {
             <div>
               {/* Brand Logo */}
               <Link href="#" className="inline-flex items-center gap-2.5 mb-5 group">
-                <div className="w-9 h-9 rounded-full bg-[#00a68a] text-white flex items-center justify-center font-bold text-base shadow-md shadow-[#00a68a]/30 group-hover:scale-105 transition-transform">
-                  R
-                </div>
+                {siteLogo ? (
+                  <div className="w-9 h-9 rounded-full overflow-hidden relative border border-white/20 shrink-0 shadow-md shadow-[#00a68a]/30 group-hover:scale-105 transition-transform bg-white/5">
+                    <Image src={siteLogo} alt="Logo" fill className="object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-9 h-9 rounded-full bg-[#00a68a] text-white flex items-center justify-center font-bold text-base shadow-md shadow-[#00a68a]/30 group-hover:scale-105 transition-transform">
+                    R
+                  </div>
+                )}
                 <span className="font-bold text-2xl tracking-tight text-white">
                   RepublikWeb<span className="text-[#00e5bf]">.net</span>
                 </span>
@@ -128,7 +144,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               {/* WhatsApp */}
               <a
-                href="https://wa.me/6285749518867"
+                href={waDirectLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
@@ -141,7 +157,7 @@ export default function Footer() {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href={siteContent.socialInstagram || "https://instagram.com"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -156,7 +172,7 @@ export default function Footer() {
 
               {/* LinkedIn */}
               <a
-                href="https://linkedin.com"
+                href={siteContent.socialLinkedin || "https://linkedin.com"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -169,7 +185,7 @@ export default function Footer() {
 
               {/* Email */}
               <a
-                href="mailto:halo@republikweb.net"
+                href={`mailto:${siteContent.contactEmail || "halo@republikweb.net"}`}
                 aria-label="Email"
                 className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10"
               >

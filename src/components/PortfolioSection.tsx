@@ -15,7 +15,7 @@ const categories: PortfolioCategory[] = [
 ];
 
 export default function PortfolioSection() {
-  const { portfolios } = useData();
+  const { portfolios, siteContent } = useData();
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory>("Semua");
   const [previewPortfolio, setPreviewPortfolio] = useState<PortfolioItem | null>(null);
 
@@ -24,8 +24,17 @@ export default function PortfolioSection() {
     : portfolios.filter((item) => item.category === activeCategory);
 
   const handleInquiry = (item: PortfolioItem) => {
-    const msg = `Halo RepublikWeb, saya melihat portofolio *${item.title}* (${item.category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?`;
-    window.open(`https://wa.me/6285749518867?text=${encodeURIComponent(msg)}`, "_blank");
+    let rawWa = (siteContent?.contactWhatsapp || "085749518867").replace(/[^0-9]/g, "");
+    if (rawWa.startsWith("0")) {
+      rawWa = "62" + rawWa.slice(1);
+    }
+    const waNumber = rawWa || "6285749518867";
+    const template = siteContent?.waTemplateInquiry || "Halo RepublikWeb, saya melihat portofolio *{title}* ({category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?";
+    const msg = template
+      .replace(/{title}/g, item.title)
+      .replace(/{category}/g, item.category);
+
+    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (

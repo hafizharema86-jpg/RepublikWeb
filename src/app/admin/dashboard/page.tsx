@@ -37,12 +37,14 @@ export default function AdminDashboardPage() {
     deleteProcessStep,
     heroImage,
     updateHeroImage,
+    siteLogo,
+    updateSiteLogo,
     siteContent,
     updateSiteContent,
   } = useData();
 
   const [activeMenu, setActiveMenu] = useState<
-    "overview" | "content" | "portfolios" | "templates" | "testimonials" | "about" | "process" | "settings"
+    "overview" | "content" | "portfolios" | "templates" | "testimonials" | "about" | "process" | "settings" | "whatsapp"
   >("overview");
 
   // Search & Filters
@@ -433,9 +435,15 @@ export default function AdminDashboardPage() {
           {/* Logo Brand Header */}
           <div className="h-16 px-6 flex items-center justify-between border-b border-slate-100 bg-white">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00a68a] to-[#2dd4bf] flex items-center justify-center text-white font-bold text-sm shadow-xs">
-                RW
-              </div>
+              {siteLogo ? (
+                <div className="w-9 h-9 rounded-xl overflow-hidden relative border border-slate-200 shrink-0 shadow-xs">
+                  <Image src={siteLogo} alt="Logo Brand" fill className="object-cover" />
+                </div>
+              ) : (
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00a68a] to-[#2dd4bf] flex items-center justify-center text-white font-bold text-sm shadow-xs">
+                  RW
+                </div>
+              )}
               <div>
                 <span className="font-extrabold text-[#0f172a] text-[15px] tracking-tight block leading-tight">
                   RepublikWeb
@@ -569,9 +577,29 @@ export default function AdminDashboardPage() {
               <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold px-3 block mb-2">
                 PENGATURAN & HUBUNGI KAMI
               </span>
+              {/* WhatsApp & Template Pesan */}
+              <button
+                onClick={() => setActiveMenu("whatsapp")}
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                  activeMenu === "whatsapp"
+                    ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                }`}
+              >
+                <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <div className="flex-1 flex items-center justify-between">
+                  <span>WhatsApp & Pesan</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-md font-bold bg-emerald-100 text-[#00a68a]">
+                    WA
+                  </span>
+                </div>
+              </button>
+
               <button
                 onClick={() => setActiveMenu("settings")}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer mt-1 ${
                   activeMenu === "settings"
                     ? "bg-[#00a68a] text-white shadow-sm shadow-[#00a68a]/20"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
@@ -591,9 +619,15 @@ export default function AdminDashboardPage() {
         <div className="p-4 border-t border-slate-100 bg-slate-50/70 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-[#00a68a] text-white font-extrabold flex items-center justify-center text-xs shadow-xs">
-                AD
-              </div>
+              {siteLogo ? (
+                <div className="w-9 h-9 rounded-full overflow-hidden relative border border-slate-200 shrink-0 shadow-xs">
+                  <Image src={siteLogo} alt="Admin Logo" fill className="object-cover" />
+                </div>
+              ) : (
+                <div className="w-9 h-9 rounded-full bg-[#00a68a] text-white font-extrabold flex items-center justify-center text-xs shadow-xs">
+                  AD
+                </div>
+              )}
               <div>
                 <span className="text-sm font-bold text-slate-800 block leading-tight">Admin Utama</span>
                 <span className="text-xs text-slate-500">admin@republikweb.net</span>
@@ -637,6 +671,7 @@ export default function AdminDashboardPage() {
               {activeMenu === "testimonials" && "Testimoni Klien"}
               {activeMenu === "about" && "Tentang Kami & Keunggulan"}
               {activeMenu === "process" && "Cara Kerja & Alur Pengerjaan"}
+              {activeMenu === "whatsapp" && "Konfigurasi WhatsApp & Template Pesan"}
               {activeMenu === "settings" && "Pengaturan Agensi"}
             </span>
           </div>
@@ -989,6 +1024,17 @@ export default function AdminDashboardPage() {
                       <div className="flex items-center justify-between">
                         <span className="text-slate-600">Kartu Keunggulan:</span>
                         <span className="font-bold text-slate-900">{aboutFeatures.length} Poin</span>
+                      </div>
+                      <div className="flex items-center justify-between border-t border-slate-200/60 pt-1.5">
+                        <span className="text-slate-600">Link WhatsApp Aktif:</span>
+                        <button
+                          type="button"
+                          onClick={() => setActiveMenu("whatsapp")}
+                          className="font-bold text-[#00a68a] hover:underline flex items-center gap-1"
+                        >
+                          <span>5 Titik Terhubung</span>
+                          <span className="text-[10px]">⚙</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -2095,6 +2141,44 @@ export default function AdminDashboardPage() {
                         className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
                       />
                     </div>
+
+                    {/* Link Instagram */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-[#00a68a]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                        <span>Link Profil Instagram</span>
+                      </label>
+                      <input
+                        type="url"
+                        value={tempSiteContent.socialInstagram || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialInstagram: e.target.value })}
+                        placeholder="Contoh: https://instagram.com/republikweb"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon Instagram di footer website.</span>
+                    </div>
+
+                    {/* Link LinkedIn */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-[#00a68a]" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                        <span>Link Halaman LinkedIn</span>
+                      </label>
+                      <input
+                        type="url"
+                        value={tempSiteContent.socialLinkedin || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialLinkedin: e.target.value })}
+                        placeholder="Contoh: https://linkedin.com/company/republikweb"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon LinkedIn di footer website.</span>
+                    </div>
                   </div>
 
                   <div className="pt-2 flex items-center gap-3">
@@ -2148,6 +2232,63 @@ export default function AdminDashboardPage() {
                     </div>
                   </div>
 
+                  {/* Upload Logo Web */}
+                  <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <label className="block text-slate-800 font-bold text-xs">
+                          Logo Website (Navbar & Footer Publik)
+                        </label>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Format PNG, SVG, atau JPG transparan (disarankan rasio 1:1 atau persegi).
+                        </p>
+                      </div>
+                      {siteLogo && (
+                        <button
+                          type="button"
+                          onClick={() => updateSiteLogo("")}
+                          className="text-[11px] text-rose-500 hover:text-rose-700 font-bold hover:underline cursor-pointer"
+                        >
+                          Reset ke Default
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      {/* Logo Preview */}
+                      <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 flex items-center justify-center p-1.5 shrink-0 shadow-2xs overflow-hidden relative group">
+                        {siteLogo ? (
+                          <Image src={siteLogo} alt="Logo Web Preview" fill className="object-contain p-1" />
+                        ) : (
+                          <div className="w-full h-full rounded-xl bg-[#00a68a] text-white flex items-center justify-center font-bold text-base shadow-xs">
+                            R
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex-1">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                updateSiteLogo(reader.result as string);
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-[#00a68a] file:text-white hover:file:bg-[#008f76] cursor-pointer file:cursor-pointer"
+                        />
+                        <span className="text-[11px] text-slate-400 mt-1 block">
+                          Logo otomatis berganti di Navbar Beranda, Footer, dan Sidebar Admin.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-slate-700 mb-1.5 font-medium">Gambar Awal Beranda (Hero Mockup)</label>
                     <div className="flex items-center gap-3">
@@ -2175,6 +2316,328 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* ============================================================== */}
+          {/* TAB 9: PENGATURAN WHATSAPP & TEMPLATE PESAN */}
+          {/* ============================================================== */}
+          {activeMenu === "whatsapp" && (
+            <div className="max-w-4xl space-y-8 animate-fadeIn">
+              {contentSavedNotice && (
+                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2 animate-fadeIn shadow-xs">
+                  <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Pengaturan Nomor & Template Pesan WhatsApp berhasil disimpan!</span>
+                </div>
+              )}
+
+              {/* CARD RINGKASAN LINK WA AKTIF */}
+              <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#00a68a] flex items-center justify-center font-bold">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">Status Sinkronisasi Link WhatsApp</h3>
+                      <p className="text-xs text-slate-500">
+                        Nomor dan template pesan ini otomatis terpasang pada <span className="font-bold text-[#00a68a]">5 Titik Link WhatsApp</span> di seluruh website.
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-50 text-[#00a68a] border border-emerald-200 shrink-0 w-fit">
+                    5 Titik Terhubung
+                  </span>
+                </div>
+
+                {/* List 5 titik link */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <div className="flex items-center gap-2 font-bold text-slate-800 mb-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>1. Tombol Pesan Template</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500">Katalog Template (pesan otomatis terisi nama, harga, data klien).</p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <div className="flex items-center gap-2 font-bold text-slate-800 mb-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>2. Inquiry Portofolio</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500">Tombol 'Konsultasi Project Serupa' pada popup detail portofolio.</p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <div className="flex items-center gap-2 font-bold text-slate-800 mb-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>3. Header Mulai Project</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500">Tombol utama navigasi atas untuk konsultasi langsung.</p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <div className="flex items-center gap-2 font-bold text-slate-800 mb-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>4. Hero Beranda Utama</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500">Tombol 'Mulai Project' di samping tagline beranda depan.</p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <div className="flex items-center gap-2 font-bold text-slate-800 mb-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>5. Footer Website & Kontak</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500">CTA konsultasi footer, ikon WhatsApp, dan link nomor telepon.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* FORM PENGATURAN NOMOR & TEMPLATE */}
+              <form onSubmit={handleSaveSiteContent} className="space-y-6">
+                {/* NOMOR WHATSAPP UTAMA */}
+                <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-4 shadow-2xs">
+                  <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#00a68a] flex items-center justify-center font-bold">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">Nomor WhatsApp Resmi Agensi</h3>
+                      <p className="text-xs text-slate-500">
+                        Nomor tujuan utama untuk semua order template, konsultasi, dan portofolio inquiry.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="max-w-md">
+                    <label className="block text-slate-700 mb-1.5 font-bold text-xs">
+                      Nomor Telepon / WhatsApp
+                    </label>
+                    <input
+                      type="text"
+                      value={tempSiteContent.contactWhatsapp || ""}
+                      onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactWhatsapp: e.target.value })}
+                      placeholder="Contoh: +62 857-4951-8867 atau 085749518867"
+                      required
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-semibold text-sm focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                    />
+                    <span className="text-[11px] text-slate-400 mt-1 block">
+                      Otomatis diubah menjadi format link internasional saat diklik oleh pengunjung.
+                    </span>
+                  </div>
+                </div>
+                {/* LINK SOSMED & KONTAK FOOTER (Instagram, LinkedIn, Email) */}
+                <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-4 shadow-2xs">
+                  <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">Link Ikon Footer (Instagram, LinkedIn, Email)</h3>
+                      <p className="text-xs text-slate-500">
+                        Atur tujuan klik pada 4 ikon lingkaran (WhatsApp, Instagram, LinkedIn, Email) di footer website.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    {/* Link Instagram */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                        <span>Link Instagram</span>
+                      </label>
+                      <input
+                        type="url"
+                        value={tempSiteContent.socialInstagram || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialInstagram: e.target.value })}
+                        placeholder="Contoh: https://instagram.com/republikweb"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon Instagram footer (ke-2 dari kiri).</span>
+                    </div>
+
+                    {/* Link LinkedIn */}
+                    <div>
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                        <span>Link LinkedIn</span>
+                      </label>
+                      <input
+                        type="url"
+                        value={tempSiteContent.socialLinkedin || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialLinkedin: e.target.value })}
+                        placeholder="Contoh: https://linkedin.com/company/republikweb"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon LinkedIn footer (ke-3 dari kiri).</span>
+                    </div>
+
+                    {/* Email Resmi */}
+                    <div className="md:col-span-2">
+                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
+                        <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>Email Resmi (mailto:)</span>
+                      </label>
+                      <input
+                        type="email"
+                        value={tempSiteContent.contactEmail || ""}
+                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactEmail: e.target.value })}
+                        placeholder="Contoh: halo@republikweb.net"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon Surat Email footer (ke-4 dari kiri).</span>
+                    </div>
+                  </div>
+                </div>
+                {/* TEMPLATE PESAN 1: ORDER TEMPLATE */}
+                <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-4 shadow-2xs">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900">1. Template Pesan: Pemesanan Template</h4>
+                      <p className="text-xs text-slate-500">
+                        Digunakan saat pengunjung/member menekan tombol "Pesan via WhatsApp" di katalog template.
+                      </p>
+                    </div>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                      Variable: {'{title}'}, {'{category}'}, {'{price}'}, {'{name}'}, {'{email}'}, {'{phone}'}
+                    </span>
+                  </div>
+
+                  <div>
+                    <textarea
+                      rows={7}
+                      value={tempSiteContent.waTemplateOrder || ""}
+                      onChange={(e) => setTempSiteContent({ ...tempSiteContent, waTemplateOrder: e.target.value })}
+                      placeholder="Tuliskan format template pesan pemesanan..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-mono text-xs focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all leading-relaxed"
+                    />
+                    <div className="mt-1 flex items-center justify-between text-[11px] text-slate-400">
+                      <span>Tag yang tersedia akan diganti otomatis dengan data template & pemesan sebenarnya.</span>
+                      <button
+                        type="button"
+                        onClick={() => setTempSiteContent({
+                          ...tempSiteContent,
+                          waTemplateOrder: "Halo RepublikWeb, saya ingin memesan template website:\n\n*Detail Template:*\n• Nama Template : *{title}*\n• Kategori : {category}\n• Harga Lisensi : *{price}*\n\n*Data Pemesan:*\n• Nama Lengkap : {name}\n• Email : {email}\n• WhatsApp : {phone}\n\nMohon dibantu proses pemesanan & setup template ini. Terima kasih!"
+                        })}
+                        className="text-[#00a68a] hover:underline font-bold"
+                      >
+                        Reset Template Default
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* TEMPLATE PESAN 2: INQUIRY PORTOFOLIO */}
+                <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-4 shadow-2xs">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900">2. Template Pesan: Tanya Project Portofolio</h4>
+                      <p className="text-xs text-slate-500">
+                        Digunakan saat pengunjung menekan tombol "Konsultasi Project Serupa" di modal portofolio.
+                      </p>
+                    </div>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                      Variable: {'{title}'}, {'{category}'}
+                    </span>
+                  </div>
+
+                  <div>
+                    <textarea
+                      rows={3}
+                      value={tempSiteContent.waTemplateInquiry || ""}
+                      onChange={(e) => setTempSiteContent({ ...tempSiteContent, waTemplateInquiry: e.target.value })}
+                      placeholder="Tuliskan format pesan tanya portofolio..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-mono text-xs focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all leading-relaxed"
+                    />
+                    <div className="mt-1 flex items-center justify-between text-[11px] text-slate-400">
+                      <span>Tag {'{title}'} & {'{category}'} akan diganti otomatis dengan judul & kategori karya.</span>
+                      <button
+                        type="button"
+                        onClick={() => setTempSiteContent({
+                          ...tempSiteContent,
+                          waTemplateInquiry: "Halo RepublikWeb, saya melihat portofolio *{title}* ({category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?"
+                        })}
+                        className="text-[#00a68a] hover:underline font-bold"
+                      >
+                        Reset Template Default
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* TEMPLATE PESAN 3: KONSULTASI UMUM & MULAI PROJECT */}
+                <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-4 shadow-2xs">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900">3. Template Pesan: Konsultasi Umum / Mulai Project</h4>
+                      <p className="text-xs text-slate-500">
+                        Digunakan pada tombol "Mulai Project" (Header & Hero) serta tombol "Mulai Konsultasi WhatsApp" di Footer.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <textarea
+                      rows={2}
+                      value={tempSiteContent.waTemplateConsultation || ""}
+                      onChange={(e) => setTempSiteContent({ ...tempSiteContent, waTemplateConsultation: e.target.value })}
+                      placeholder="Tuliskan pesan konsultasi umum..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-mono text-xs focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all leading-relaxed"
+                    />
+                    <div className="mt-1 flex items-center justify-between text-[11px] text-slate-400">
+                      <span>Pesan pembuka ketika pengunjung ingin memulai konsultasi baru.</span>
+                      <button
+                        type="button"
+                        onClick={() => setTempSiteContent({
+                          ...tempSiteContent,
+                          waTemplateConsultation: "Halo RepublikWeb, saya tertarik untuk memulai project website. Boleh konsultasi terlebih dahulu?"
+                        })}
+                        className="text-[#00a68a] hover:underline font-bold"
+                      >
+                        Reset Template Default
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* TOMBOL SIMPAN */}
+                <div className="flex items-center gap-3">
+                  <button
+                    type="submit"
+                    className="px-7 py-3 bg-[#00a68a] hover:bg-[#008f76] text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-[#00a68a]/20 cursor-pointer flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Simpan Nomor & Semua Template Pesan</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTempSiteContent(siteContent)}
+                    className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs rounded-xl cursor-pointer transition-all"
+                  >
+                    Batalkan Perubahan
+                  </button>
+                </div>
+              </form>
             </div>
           )}
         </main>

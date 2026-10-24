@@ -40,7 +40,7 @@ const sampleTemplates: Record<string, { title: string; category: string; price: 
 
 export default function MemberDashboardModal() {
   const { user, isDashboardOpen, closeDashboard, logout, toggleSaveTemplate } = useAuth();
-  const { templates } = useData();
+  const { templates, siteLogo } = useData();
 
   if (!isDashboardOpen || !user) return null;
 
@@ -60,9 +60,15 @@ export default function MemberDashboardModal() {
         {/* Header with User Info & Close */}
         <div className="flex items-start justify-between pb-5 border-b border-gray-100">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#00a68a] to-[#2dd4bf] text-white flex items-center justify-center font-bold text-lg shadow-md shadow-[#00a68a]/20">
-              {user.name.charAt(0).toUpperCase()}
-            </div>
+            {user.role === "admin" && siteLogo ? (
+              <div className="w-12 h-12 rounded-full overflow-hidden relative border border-gray-200 shrink-0 shadow-md shadow-[#00a68a]/20">
+                <Image src={siteLogo} alt={user.name} fill className="object-cover" />
+              </div>
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#00a68a] to-[#2dd4bf] text-white flex items-center justify-center font-bold text-lg shadow-md shadow-[#00a68a]/20">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+            )}
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-bold text-[#1a1a1a]">{user.name}</h3>
