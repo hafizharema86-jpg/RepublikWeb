@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { useData } from "@/context/DataContext";
 
 interface SocialMediaFeature {
   id: string;
@@ -17,6 +19,16 @@ const socialFeatures: SocialMediaFeature[] = [
 ];
 
 export default function SocialMediaSection() {
+  const { siteContent } = useData();
+
+  let rawWa = (siteContent?.contactWhatsapp || "085749518867").replace(/[^0-9]/g, "");
+  if (rawWa.startsWith("0")) {
+    rawWa = "62" + rawWa.slice(1);
+  }
+  const waNumber = rawWa || "6285749518867";
+  const socialMsg = "Halo RepublikWeb, saya ingin konsultasi mengenai layanan Social Media Management untuk meningkatkan brand dan penjualan bisnis saya.";
+  const waSocialLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(socialMsg)}`;
+
   const renderIcon = (type: SocialMediaFeature["icon"]) => {
     switch (type) {
       case "planning":
@@ -101,12 +113,17 @@ export default function SocialMediaSection() {
           </div>
 
           {/* CTA Button */}
-          <Link
-            href="#kontak"
-            className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-7 py-3 rounded-full text-xs md:text-sm font-semibold transition-all shadow-md shadow-[#00a68a]/20 inline-flex items-center gap-2"
+          <a
+            href={waSocialLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-7 py-3 rounded-full text-xs md:text-sm font-semibold transition-all shadow-md shadow-[#00a68a]/20 inline-flex items-center gap-2 cursor-pointer group"
           >
-            Konsultasikan Social Media Anda
-          </Link>
+            <span>Konsultasikan Social Media Anda</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
         </div>
 
         {/* Right Column: Office Collaboration & Content Calendar Image */}

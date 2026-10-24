@@ -300,7 +300,7 @@ export default function Footer() {
                 <div>
                   <span className="block text-xs text-[#64748b]">WhatsApp / Telp</span>
                   <a
-                    href={`https://wa.me/${(siteContent.contactWhatsapp || "081234567890").replace(/[^0-9]/g, "")}`}
+                    href={waDirectLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white hover:text-[#00e5bf] transition-colors font-medium"

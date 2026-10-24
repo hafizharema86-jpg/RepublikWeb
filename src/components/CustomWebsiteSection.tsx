@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { useData } from "@/context/DataContext";
 
 const customFeatures = [
   { id: "1", title: "Company Profile" },
@@ -13,6 +15,16 @@ const customFeatures = [
 ];
 
 export default function CustomWebsiteSection() {
+  const { siteContent } = useData();
+
+  let rawWa = (siteContent?.contactWhatsapp || "085749518867").replace(/[^0-9]/g, "");
+  if (rawWa.startsWith("0")) {
+    rawWa = "62" + rawWa.slice(1);
+  }
+  const waNumber = rawWa || "6285749518867";
+  const customMsg = "Halo RepublikWeb, saya ingin konsultasi mengenai pembuatan Custom Website / sistem kustom dari nol untuk kebutuhan bisnis saya.";
+  const waCustomLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(customMsg)}`;
+
   return (
     <section id="custom-website" className="w-full bg-white py-16 md:py-24 border-t border-gray-100/80">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -73,12 +85,17 @@ export default function CustomWebsiteSection() {
           </div>
 
           {/* CTA Button */}
-          <Link
-            href="#kontak"
-            className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-7 py-3 rounded-full text-xs md:text-sm font-semibold transition-all shadow-md shadow-[#00a68a]/20 inline-flex items-center gap-2"
+          <a
+            href={waCustomLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-7 py-3 rounded-full text-xs md:text-sm font-semibold transition-all shadow-md shadow-[#00a68a]/20 inline-flex items-center gap-2 cursor-pointer group"
           >
-            Konsultasikan Project Anda
-          </Link>
+            <span>Konsultasikan Project Anda</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
         </div>
 
       </div>

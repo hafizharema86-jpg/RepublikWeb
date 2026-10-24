@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 interface SubService {
   id: string;
@@ -238,12 +239,23 @@ export default function ServicesSection() {
             <p className="text-[#64748b] text-xs md:text-sm leading-relaxed mb-6 font-normal">
               {currentCategory.subtitle}
             </p>
-            <button className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-4 py-2 rounded-full text-xs md:text-[13px] font-semibold flex items-center gap-1.5 transition-all shadow-xs">
+            <Link
+              href={
+                currentCategory.id === "landing-page"
+                  ? "#template"
+                  : currentCategory.id === "template-marketplace"
+                  ? "#template"
+                  : currentCategory.id === "custom-website"
+                  ? "#custom-website"
+                  : "#social-media"
+              }
+              className="bg-[#00a68a] hover:bg-[#008f76] active:scale-95 text-white px-4 py-2 rounded-full text-xs md:text-[13px] font-semibold inline-flex items-center gap-1.5 transition-all shadow-xs cursor-pointer group"
+            >
               <span>Pelajari Selengkapnya</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </button>
+            </Link>
           </div>
 
           {/* Right Column: 2x2 Grid of 4 Cards */}

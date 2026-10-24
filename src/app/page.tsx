@@ -35,7 +35,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 w-full bg-white/85 backdrop-blur-md border-b border-gray-200/60 transition-all shadow-xs">
         <div className="w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-20 py-3.5 flex items-center justify-between">
           {/* Brand Logo */}
-          <div className="flex items-center gap-2.5 cursor-pointer">
+          <Link href="/" className="flex items-center gap-2.5 cursor-pointer">
             {siteLogo ? (
               <div className="w-8 h-8 rounded-full overflow-hidden relative border border-gray-200/70 shrink-0 shadow-xs">
                 <Image src={siteLogo} alt="Logo" fill className="object-cover" />
@@ -48,7 +48,7 @@ export default function Home() {
             <span className="font-bold text-xl tracking-tight text-[#1a1a1a]">
               RepublikWeb<span className="text-[#00a68a]">.net</span>
             </span>
-          </div>
+          </Link>
 
           {/* Nav Links & CTA Button Grouped & Compacted to the Right */}
           <div className="flex items-center gap-5 lg:gap-6">
