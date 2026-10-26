@@ -140,60 +140,104 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-3">
+            {/* Social Icons (Wa, Ig, Fb, Email, TikTok, LinkedIn) with visibility switch */}
+            <div className="flex items-center gap-2.5 flex-wrap">
               {/* WhatsApp */}
-              <a
-                href={waDirectLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-              </a>
+              {siteContent.showSocialWhatsapp !== false && (
+                <a
+                  href={waDirectLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  title="WhatsApp"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10 hover:scale-105"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                </a>
+              )}
 
               {/* Instagram */}
-              <a
-                href={siteContent.socialInstagram || "https://instagram.com"}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10"
-              >
-                <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                </svg>
-              </a>
+              {siteContent.showSocialInstagram !== false && (
+                <a
+                  href={siteContent.socialInstagram || "https://instagram.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  title="Instagram"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10 hover:scale-105"
+                >
+                  <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </a>
+              )}
 
-              {/* LinkedIn */}
-              <a
-                href={siteContent.socialLinkedin || "https://linkedin.com"}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                </svg>
-              </a>
+              {/* Facebook */}
+              {siteContent.showSocialFacebook !== false && (
+                <a
+                  href={siteContent.socialFacebook || "https://facebook.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  title="Facebook"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10 hover:scale-105"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                </a>
+              )}
 
               {/* Email */}
-              <a
-                href={`mailto:${siteContent.contactEmail || "halo@republikweb.net"}`}
-                aria-label="Email"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10"
-              >
-                <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-              </a>
+              {siteContent.showSocialEmail !== false && (
+                <a
+                  href={`mailto:${siteContent.socialEmail || siteContent.contactEmail || "halo@republikweb.net"}`}
+                  aria-label="Email"
+                  title="Email"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10 hover:scale-105"
+                >
+                  <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </a>
+              )}
+
+              {/* TikTok */}
+              {siteContent.showSocialTiktok !== false && (
+                <a
+                  href={siteContent.socialTiktok || "https://tiktok.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                  title="TikTok"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10 hover:scale-105"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.98v7.45c-.01 2.92-1.35 5.76-3.69 7.42-2.3 1.63-5.38 2.06-8.08 1.15-2.73-.91-4.9-3.13-5.66-5.91-.77-2.79-.19-5.87 1.55-8.15 1.76-2.3 4.6-3.64 7.49-3.48v4.16c-1.45-.17-2.97.28-4.04 1.3-1.09 1.04-1.55 2.63-1.21 4.1.33 1.48 1.58 2.64 3.08 2.87 1.5.24 3.08-.41 3.88-1.7.35-.55.53-1.2.53-1.87V.02z" />
+                  </svg>
+                </a>
+              )}
+
+              {/* LinkedIn */}
+              {siteContent.showSocialLinkedin !== false && (
+                <a
+                  href={siteContent.socialLinkedin || "https://linkedin.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  title="LinkedIn"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#00a68a] hover:text-white text-[#94a3b8] flex items-center justify-center transition-all duration-200 border border-white/10 hover:scale-105"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
 

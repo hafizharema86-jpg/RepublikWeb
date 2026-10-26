@@ -590,9 +590,9 @@ export default function AdminDashboardPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
                 <div className="flex-1 flex items-center justify-between">
-                  <span>WhatsApp & Pesan</span>
+                  <span>WhatsApp & Media Sosial</span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded-md font-bold bg-emerald-100 text-[#00a68a]">
-                    WA
+                    SOSMED
                   </span>
                 </div>
               </button>
@@ -671,7 +671,7 @@ export default function AdminDashboardPage() {
               {activeMenu === "testimonials" && "Testimoni Klien"}
               {activeMenu === "about" && "Tentang Kami & Keunggulan"}
               {activeMenu === "process" && "Cara Kerja & Alur Pengerjaan"}
-              {activeMenu === "whatsapp" && "Konfigurasi WhatsApp & Template Pesan"}
+              {activeMenu === "whatsapp" && "Konfigurasi WhatsApp & Media Sosial"}
               {activeMenu === "settings" && "Pengaturan Agensi"}
             </span>
           </div>
@@ -2433,77 +2433,289 @@ export default function AdminDashboardPage() {
                     </span>
                   </div>
                 </div>
-                {/* LINK SOSMED & KONTAK FOOTER (Instagram, LinkedIn, Email) */}
+                {/* LINK SOSMED & KONTAK FOOTER (Wa, Ig, Fb, Email, TikTok, LinkedIn) */}
                 <div className="bg-white rounded-2xl border border-slate-200/90 p-6 md:p-8 space-y-4 shadow-2xs">
                   <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-                    <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00a68a]/20 to-teal-100 text-[#00a68a] flex items-center justify-center shrink-0">
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
                     </div>
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900">Link Ikon Footer (Instagram, LinkedIn, Email)</h3>
+                    <div className="flex-1">
+                      <h3 className="text-base font-bold text-slate-900">Kelola 6 Sosial Media & Saklar Tampilan (ON / OFF)</h3>
                       <p className="text-xs text-slate-500">
-                        Atur tujuan klik pada 4 ikon lingkaran (WhatsApp, Instagram, LinkedIn, Email) di footer website.
+                        Atur link profil WhatsApp, Instagram, Facebook, Email, TikTok, dan LinkedIn. Anda bisa mematikan (OFF) agar tidak muncul di halaman user / footer.
                       </p>
                     </div>
                   </div>
 
+                  {/* Live Preview Bar */}
+                  <div className="p-4 rounded-xl bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
+                    <div>
+                      <span className="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Preview Ikon yang Aktif di Halaman User:</span>
+                      <span className="text-xs text-slate-300">Hanya ikon dengan status <b className="text-emerald-400">ON</b> yang tampil bagi pengunjung.</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {tempSiteContent.showSocialWhatsapp !== false && (
+                        <div title="WhatsApp Aktif" className="w-8 h-8 rounded-full bg-emerald-600/30 border border-emerald-500/50 text-emerald-400 flex items-center justify-center">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                          </svg>
+                        </div>
+                      )}
+                      {tempSiteContent.showSocialInstagram !== false && (
+                        <div title="Instagram Aktif" className="w-8 h-8 rounded-full bg-pink-600/30 border border-pink-500/50 text-pink-400 flex items-center justify-center">
+                          <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                          </svg>
+                        </div>
+                      )}
+                      {tempSiteContent.showSocialFacebook !== false && (
+                        <div title="Facebook Aktif" className="w-8 h-8 rounded-full bg-blue-600/30 border border-blue-500/50 text-blue-400 flex items-center justify-center">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                          </svg>
+                        </div>
+                      )}
+                      {tempSiteContent.showSocialEmail !== false && (
+                        <div title="Email Aktif" className="w-8 h-8 rounded-full bg-emerald-600/30 border border-emerald-500/50 text-emerald-400 flex items-center justify-center">
+                          <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                          </svg>
+                        </div>
+                      )}
+                      {tempSiteContent.showSocialTiktok !== false && (
+                        <div title="TikTok Aktif" className="w-8 h-8 rounded-full bg-cyan-600/30 border border-cyan-500/50 text-cyan-400 flex items-center justify-center">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.98v7.45c-.01 2.92-1.35 5.76-3.69 7.42-2.3 1.63-5.38 2.06-8.08 1.15-2.73-.91-4.9-3.13-5.66-5.91-.77-2.79-.19-5.87 1.55-8.15 1.76-2.3 4.6-3.64 7.49-3.48v4.16c-1.45-.17-2.97.28-4.04 1.3-1.09 1.04-1.55 2.63-1.21 4.1.33 1.48 1.58 2.64 3.08 2.87 1.5.24 3.08-.41 3.88-1.7.35-.55.53-1.2.53-1.87V.02z" />
+                          </svg>
+                        </div>
+                      )}
+                      {tempSiteContent.showSocialLinkedin !== false && (
+                        <div title="LinkedIn Aktif" className="w-8 h-8 rounded-full bg-blue-700/30 border border-blue-500/50 text-blue-400 flex items-center justify-center">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    {/* Link Instagram */}
-                    <div>
-                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
-                        <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                        </svg>
-                        <span>Link Instagram</span>
-                      </label>
-                      <input
-                        type="url"
-                        value={tempSiteContent.socialInstagram || ""}
-                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialInstagram: e.target.value })}
-                        placeholder="Contoh: https://instagram.com/republikweb"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
-                      />
-                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon Instagram footer (ke-2 dari kiri).</span>
+                    {/* 1. WhatsApp */}
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-slate-800 font-bold flex items-center gap-1.5">
+                            <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                              </svg>
+                            </span>
+                            <span>1. WhatsApp</span>
+                          </label>
+                          <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                            <span className="text-[11px] font-bold text-slate-500">
+                              {tempSiteContent.showSocialWhatsapp !== false ? "ON" : "OFF"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={tempSiteContent.showSocialWhatsapp !== false}
+                              onChange={(e) => setTempSiteContent({ ...tempSiteContent, showSocialWhatsapp: e.target.checked })}
+                              className="w-4 h-4 text-[#00a68a] rounded border-slate-300 focus:ring-[#00a68a] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                        <input
+                          type="text"
+                          value={tempSiteContent.contactWhatsapp || ""}
+                          onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactWhatsapp: e.target.value, socialWhatsapp: e.target.value })}
+                          placeholder="Contoh: +62 857-4951-8867"
+                          className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                        />
+                      </div>
+                      <span className="text-[11px] text-slate-400 mt-1 block">Otomatis terhubung ke link chat WA di footer.</span>
                     </div>
 
-                    {/* Link LinkedIn */}
-                    <div>
-                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
-                        <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                        </svg>
-                        <span>Link LinkedIn</span>
-                      </label>
-                      <input
-                        type="url"
-                        value={tempSiteContent.socialLinkedin || ""}
-                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialLinkedin: e.target.value })}
-                        placeholder="Contoh: https://linkedin.com/company/republikweb"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
-                      />
-                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon LinkedIn footer (ke-3 dari kiri).</span>
+                    {/* 2. Instagram */}
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-slate-800 font-bold flex items-center gap-1.5">
+                            <span className="w-6 h-6 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                              </svg>
+                            </span>
+                            <span>2. Instagram (IG)</span>
+                          </label>
+                          <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                            <span className="text-[11px] font-bold text-slate-500">
+                              {tempSiteContent.showSocialInstagram !== false ? "ON" : "OFF"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={tempSiteContent.showSocialInstagram !== false}
+                              onChange={(e) => setTempSiteContent({ ...tempSiteContent, showSocialInstagram: e.target.checked })}
+                              className="w-4 h-4 text-[#00a68a] rounded border-slate-300 focus:ring-[#00a68a] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                        <input
+                          type="url"
+                          value={tempSiteContent.socialInstagram || ""}
+                          onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialInstagram: e.target.value })}
+                          placeholder="https://instagram.com/username"
+                          className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                        />
+                      </div>
+                      <span className="text-[11px] text-slate-400 mt-1 block">Link akun Instagram agensi Anda.</span>
                     </div>
 
-                    {/* Email Resmi */}
-                    <div className="md:col-span-2">
-                      <label className="block text-slate-700 mb-1.5 font-bold flex items-center gap-1.5">
-                        <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <span>Email Resmi (mailto:)</span>
-                      </label>
-                      <input
-                        type="email"
-                        value={tempSiteContent.contactEmail || ""}
-                        onChange={(e) => setTempSiteContent({ ...tempSiteContent, contactEmail: e.target.value })}
-                        placeholder="Contoh: halo@republikweb.net"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:bg-white focus:outline-none transition-all"
-                      />
-                      <span className="text-[11px] text-slate-400 mt-1 block">Tampil pada ikon Surat Email footer (ke-4 dari kiri).</span>
+                    {/* 3. Facebook */}
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-slate-800 font-bold flex items-center gap-1.5">
+                            <span className="w-6 h-6 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                              </svg>
+                            </span>
+                            <span>3. Facebook (FB)</span>
+                          </label>
+                          <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                            <span className="text-[11px] font-bold text-slate-500">
+                              {tempSiteContent.showSocialFacebook !== false ? "ON" : "OFF"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={tempSiteContent.showSocialFacebook !== false}
+                              onChange={(e) => setTempSiteContent({ ...tempSiteContent, showSocialFacebook: e.target.checked })}
+                              className="w-4 h-4 text-[#00a68a] rounded border-slate-300 focus:ring-[#00a68a] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                        <input
+                          type="url"
+                          value={tempSiteContent.socialFacebook || ""}
+                          onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialFacebook: e.target.value })}
+                          placeholder="https://facebook.com/username"
+                          className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                        />
+                      </div>
+                      <span className="text-[11px] text-slate-400 mt-1 block">Link fanspage atau profil Facebook.</span>
+                    </div>
+
+                    {/* 4. Email */}
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-slate-800 font-bold flex items-center gap-1.5">
+                            <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                              </svg>
+                            </span>
+                            <span>4. Email</span>
+                          </label>
+                          <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                            <span className="text-[11px] font-bold text-slate-500">
+                              {tempSiteContent.showSocialEmail !== false ? "ON" : "OFF"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={tempSiteContent.showSocialEmail !== false}
+                              onChange={(e) => setTempSiteContent({ ...tempSiteContent, showSocialEmail: e.target.checked })}
+                              className="w-4 h-4 text-[#00a68a] rounded border-slate-300 focus:ring-[#00a68a] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                        <input
+                          type="email"
+                          value={tempSiteContent.socialEmail || tempSiteContent.contactEmail || ""}
+                          onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialEmail: e.target.value, contactEmail: e.target.value })}
+                          placeholder="halo@republikweb.net"
+                          className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                        />
+                      </div>
+                      <span className="text-[11px] text-slate-400 mt-1 block">Otomatis membuka aplikasi email (mailto:).</span>
+                    </div>
+
+                    {/* 5. TikTok */}
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-slate-800 font-bold flex items-center gap-1.5">
+                            <span className="w-6 h-6 rounded-lg bg-cyan-100 text-cyan-600 flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.98v7.45c-.01 2.92-1.35 5.76-3.69 7.42-2.3 1.63-5.38 2.06-8.08 1.15-2.73-.91-4.9-3.13-5.66-5.91-.77-2.79-.19-5.87 1.55-8.15 1.76-2.3 4.6-3.64 7.49-3.48v4.16c-1.45-.17-2.97.28-4.04 1.3-1.09 1.04-1.55 2.63-1.21 4.1.33 1.48 1.58 2.64 3.08 2.87 1.5.24 3.08-.41 3.88-1.7.35-.55.53-1.2.53-1.87V.02z" />
+                              </svg>
+                            </span>
+                            <span>5. TikTok</span>
+                          </label>
+                          <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                            <span className="text-[11px] font-bold text-slate-500">
+                              {tempSiteContent.showSocialTiktok !== false ? "ON" : "OFF"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={tempSiteContent.showSocialTiktok !== false}
+                              onChange={(e) => setTempSiteContent({ ...tempSiteContent, showSocialTiktok: e.target.checked })}
+                              className="w-4 h-4 text-[#00a68a] rounded border-slate-300 focus:ring-[#00a68a] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                        <input
+                          type="url"
+                          value={tempSiteContent.socialTiktok || ""}
+                          onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialTiktok: e.target.value })}
+                          placeholder="https://tiktok.com/@username"
+                          className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                        />
+                      </div>
+                      <span className="text-[11px] text-slate-400 mt-1 block">Link akun TikTok RepublikWeb/agensi.</span>
+                    </div>
+
+                    {/* 6. LinkedIn */}
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-slate-800 font-bold flex items-center gap-1.5">
+                            <span className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                              </svg>
+                            </span>
+                            <span>6. LinkedIn</span>
+                          </label>
+                          <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                            <span className="text-[11px] font-bold text-slate-500">
+                              {tempSiteContent.showSocialLinkedin !== false ? "ON" : "OFF"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={tempSiteContent.showSocialLinkedin !== false}
+                              onChange={(e) => setTempSiteContent({ ...tempSiteContent, showSocialLinkedin: e.target.checked })}
+                              className="w-4 h-4 text-[#00a68a] rounded border-slate-300 focus:ring-[#00a68a] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                        <input
+                          type="url"
+                          value={tempSiteContent.socialLinkedin || ""}
+                          onChange={(e) => setTempSiteContent({ ...tempSiteContent, socialLinkedin: e.target.value })}
+                          placeholder="https://linkedin.com/company/namabisnis"
+                          className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-[#00a68a] focus:outline-none transition-all"
+                        />
+                      </div>
+                      <span className="text-[11px] text-slate-400 mt-1 block">Link profil atau company page LinkedIn.</span>
                     </div>
                   </div>
                 </div>

@@ -71,9 +71,19 @@ export interface SiteContent {
   contactWhatsapp: string;
   contactHours: string;
   contactLocation: string;
-  // Social Media Links
+  // Social Media Links & Visibility
+  socialWhatsapp: string;
   socialInstagram: string;
+  socialFacebook: string;
+  socialEmail: string;
+  socialTiktok: string;
   socialLinkedin: string;
+  showSocialWhatsapp: boolean;
+  showSocialInstagram: boolean;
+  showSocialFacebook: boolean;
+  showSocialEmail: boolean;
+  showSocialTiktok: boolean;
+  showSocialLinkedin: boolean;
   // Template Pesan WhatsApp
   waTemplateOrder: string;
   waTemplateInquiry: string;
@@ -379,8 +389,18 @@ const defaultSiteContent: SiteContent = {
   contactWhatsapp: "+62 857-4951-8867",
   contactHours: "Senin – Sabtu, 09.00 – 18.00 WIB",
   contactLocation: "Jakarta & Yogyakarta, Indonesia",
+  socialWhatsapp: "+62 857-4951-8867",
   socialInstagram: "https://instagram.com/republikweb",
+  socialFacebook: "https://facebook.com/republikweb",
+  socialEmail: "halo@republikweb.net",
+  socialTiktok: "https://tiktok.com/@republikweb",
   socialLinkedin: "https://linkedin.com/company/republikweb",
+  showSocialWhatsapp: true,
+  showSocialInstagram: true,
+  showSocialFacebook: true,
+  showSocialEmail: true,
+  showSocialTiktok: true,
+  showSocialLinkedin: true,
   waTemplateOrder: "Halo RepublikWeb, saya ingin memesan template website:\n\n*Detail Template:*\n• Nama Template : *{title}*\n• Kategori : {category}\n• Harga Lisensi : *{price}*\n\n*Data Pemesan:*\n• Nama Lengkap : {name}\n• Email : {email}\n• WhatsApp : {phone}\n\nMohon dibantu proses pemesanan & setup template ini. Terima kasih!",
   waTemplateInquiry: "Halo RepublikWeb, saya melihat portofolio *{title}* ({category}) di website RepublikWeb dan tertarik membuat project serupa. Boleh info estimasi dan alur kerjanya?",
   waTemplateConsultation: "Halo RepublikWeb, saya tertarik untuk memulai project website. Boleh konsultasi terlebih dahulu?",
